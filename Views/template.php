@@ -7,17 +7,16 @@
         <title><?= $this->e($title) ?></title>
     </head>
     <body>
-    <header>
-        <!-- Menu -->
-        <nav>
-        </nav>
-    </header>
-    <!-- #contenu -->
-    <main id="contenu">
-    <?=$this->section('content')?>
-    </main>
-    <footer>
-        
-    </footer>
+        <header>
+            <!-- Menu -->
+            <nav>
+            </nav>
+        </header>
+        <!-- #contenu -->
+        <main id="contenu">
+            <?=$this->section('content')?>
+        </main>
+        <footer>
+        </footer>
     </body>
 </html>
