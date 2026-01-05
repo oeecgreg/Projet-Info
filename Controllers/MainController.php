@@ -1,7 +1,9 @@
 <?php
 
 namespace Controllers;
+
 use League\Plates\Engine;
+use Models\PersonnageDAO; // Importation nécessaire
 
 class MainController {
     private $templates;
@@ -12,6 +14,17 @@ class MainController {
     }
 
     public function index() : void {
-        echo $this->templates->render('home', ['gameName' => 'Brawl Stars']);
+        // Test demandé à l'étape 2.3 du PDF
+        $personnageDAO = new PersonnageDAO();
+        
+        $listPersonnage = $personnageDAO->getAll();
+        $first = $personnageDAO->getByID(1); // Remplacez 1 par un ID existant
+        $other = $personnageDAO->getByID(999);
+
+        echo $this->templates->render('home', [
+            'listPersonnage' => $listPersonnage,
+            'first'          => $first,
+            'other'          => $other
+        ]);
     }
 }
