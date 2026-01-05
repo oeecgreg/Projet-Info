@@ -4,4 +4,3 @@
 $this->layout('template', ['title' => 'Brawl Stars Characters']);
 
 ?>
-<h1><?= $this->e($gameName) ?> characters</h1>

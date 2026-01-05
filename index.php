@@ -13,7 +13,7 @@ $loader->addNamespace('\Helpers', '/Helpers');
 $loader->addNamespace('\League\Plates', '/Vendor/Plates/src');
 $loader->addNamespace('\Controllers', '/Controllers');
 
-$templatesPath = 'Views'; // Remplacez par le chemin vers vos fichiers de templates
+$templatesPath = 'Views'; // Remplacez par le chemin vers les fichiers de templates (a faire)
 $engine = new Engine($templatesPath);
 
 $controller = new MainController();
