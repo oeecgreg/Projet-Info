@@ -1,22 +1,36 @@
-<?php $this->layout('template', ['title' => 'Test des données']) ?>
+<?php $this->layout('template', ['title' => 'Liste des Brawlers']) ?>
 
-<h1>Résultats du test DAO</h1>
+<div class="container">
+    <h1 class="h1">Liste des Brawlers</h1>
 
-<section>
-    <h2>Liste de tous les personnages :</h2>
-    <?php var_dump($listPersonnage); ?>
-</section>
-
-<hr>
-
-<section>
-    <h2>Un personnage existant :</h2>
-    <?php var_dump($first); ?>
-</section>
-
-<hr>
-
-<section>
-    <h2>Un personnage inexistant (doit être NULL) :</h2>
-    <?php var_dump($other); ?>
-</section>
+    <table class="brawler-table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Nom</th>
+                <th>Classe</th>
+                <th>Rareté</th>
+                <th>Options</th> </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($listPersonnage as $brawler): ?>
+                <tr>
+                    <td>
+                        <img src="<?= $this->e($brawler['url_img']) ?>" alt="<?= $this->e($brawler['name']) ?>" class="table-img">
+                    </td>
+                    <td><?= $this->e($brawler['name']) ?></td>
+                    <td><?= $this->e($brawler['classe']) ?></td>
+                    <td>
+                        <span class="rarity-badge <?= strtolower($this->e($brawler['rarity'])) ?>">
+                            <?= $this->e($brawler['rarity']) ?>
+                        </span>
+                    </td>
+                    <td class="options">
+                        <a href="index.php?action=edit-perso&id=<?= $brawler['id'] ?>">Modifier</a>
+                        <a href="index.php?action=del-perso&id=<?= $brawler['id'] ?>"> Supprimer</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>

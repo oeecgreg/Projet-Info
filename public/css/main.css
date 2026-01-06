@@ -1,10 +1,128 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #f0f0f0;
     margin: 0;
     padding: 0;
 }
 
-h1 {
-   color: black;
+.container {
+    max-width: 1600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+.h1 {
+    text-align: center;
+    font-family: 'Arial', Helvetica, sans-serif;
+    color: black;
+    margin-bottom: 20px;
+}
+
+/* ============================
+        Tableau des Brawlers 
+    =========================== */
+
+/* Style pour le tableau des brawlers */
+.brawler-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 10px;
+}
+
+.brawler-table thead {
+    background-color: #333;
+    color: black;
+    font-size: 30px;
+    border: #cfcaca solid 3px;
+}
+
+.brawler-table th {
+    background-color: #f4f4f4;
+    padding: 12px;
+    text-align: center;
+    border-bottom: 2px solid #ddd;
+}
+
+.brawler-table td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 25px;
+}
+
+/* Style pour les images dans le tableau */
+.table-img {
+    width: 185px;
+    height: 185px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #333;
+}
+
+/* Style pour les options (icones) */
+.options a {
+    text-decoration: none;
+    margin-right: 10px;
+    font-size: 1.2em;
+    transition: opacity 0.2s;
+}
+
+.options a:hover {
+    opacity: 0.7;
+}
+
+/*Badges de rareté, ptet à supprimer si pas le temps de finir */
+.rarity-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: bold;
+    background: #eee;
+}
+
+/* ============================
+        Navigation Menu 
+    =========================== */
+nav {
+    background-color: #333;
+    padding: 2rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Légère ombre vite fait*/
+}
+
+#logo-bs img {
+    height: 100px;
+    vertical-align: middle;
+    position: absolute; 
+    left: 60px;
+    top: 3px;
+}
+
+nav ul {
+    font-family: Arial, Helvetica, sans-serif;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 40px; /* Espace entre les liens pcq peut poser porbleme */
+    flex-wrap: wrap; 
+}
+
+nav li a {
+    text-decoration: none; /* Enlève le soulignement, c pas beau */
+    color: white;
+    font-weight: bold;
+    font-size: 1.55rem;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s; /* Animation en despi au survol */
+}
+
+nav li a:hover {
+    background-color: #555;
+    color: #ffcc00; /* Petite touche de couleur pas piqué des hannetons */
 }
