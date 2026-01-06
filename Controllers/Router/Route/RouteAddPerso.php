@@ -1,29 +1,25 @@
 <?php
-
 namespace Controllers\Router\Route;
 
 use Controllers\Router\Route;
 use Controllers\MainController;
 
-class RouteIndex extends Route
+class RouteAddPerso extends Route
 {
     private MainController $controller;
 
-    // Le constructeur reçoit le contrôleur
     public function __construct(MainController $controller)
     {
         $this->controller = $controller;
     }
 
-    // Appel de la méthode index() du contrôleur
     public function get($params = [])
     {
-        return $this->controller->index();
+        return $this->controller->displayAddPerso();
     }
 
-    // Le sujet dit que post ne fait rien ou appelle index pour l'instant
     public function post($params = [])
     {
-        return $this->controller->index();
+        // On laissera vide pour l'instant, on gérera l'ajout en base plus tard
     }
 }

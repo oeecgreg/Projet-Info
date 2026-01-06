@@ -8,19 +8,16 @@
     </head>
     <body>
         <header>
-            <!-- Menu -->
             <nav>
-                <a id="logo-bs"><img src="public\img\BS_logo.png"></a>
                 <ul>
                     <li><a href="index.php">Accueil</a></li>
                     <li><a href="index.php?action=add-perso">Ajouter un Brawler</a></li>
-                    <li><a href="index.php?action=add-perso-element">Ajouter un Élément</a></li>
+                    <li><a href="index.php?action=add-classe">Ajouter une Classe</a></li>
                     <li><a href="index.php?action=logs">Journal (Logs)</a></li>
                     <li><a href="index.php?action=login">Connexion</a></li>
                 </ul>
             </nav>
         </header>
-        <!-- #contenu -->
         <main id="contenu">
             <?=$this->section('content')?>
         </main>

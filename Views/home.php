@@ -26,8 +26,8 @@
                         </span>
                     </td>
                     <td class="options">
-                        <a href="index.php?action=edit-perso&id=<?= $brawler['id'] ?>">Modifier</a>
-                        <a href="index.php?action=del-perso&id=<?= $brawler['id'] ?>"> Supprimer</a>
+                        <a href="index.php?action=edit-perso&id=<?= $brawler['id'] ?>" title="Modifier">✏️</a>
+                        <a href="index.php?action=del-perso&id=<?= $brawler['id'] ?>" title="Supprimer">🗑️</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

@@ -1,11 +1,15 @@
 <?php
 
+session_start();
+
 // Importation de l'autoloader généré par Composer
-require_once __DIR__ . '/Helpers/Psr4AutoloaderClass.php';
+require __DIR__ . '/Helpers/Psr4AutoloaderClass.php';
+
 use Helpers\Psr4AutoloaderClass;
 use League\Plates\Engine;
 use Controllers\MainController;
 use Config\Config;
+use Controllers\Router\Router;
 
 $loader = new Psr4AutoloaderClass();
 $loader->register();
@@ -17,10 +21,9 @@ $loader->addNamespace('Controllers', __DIR__ . '/Controllers');
 $loader->addNamespace('Models', __DIR__ . '/Models'); // Indispensable pour PersonnageDAO
 $loader->addNamespace('Config', __DIR__ . '/Config');
 
-$templatesPath = 'Views'; // Remplacez par le chemin vers les fichiers de templates (a faire)
-$engine = new Engine($templatesPath);
+$engine = new Engine('Views');
 
 Config::load(__DIR__ . '/Config/dev.ini');
 
-$controller = new MainController();
-$controller->index();
+$router = new Router($engine);
+$router->routing($_GET, $_POST);

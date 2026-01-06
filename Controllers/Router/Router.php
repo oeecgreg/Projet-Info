@@ -1,0 +1,72 @@
+<?php
+
+namespace Controllers\Router;
+
+use Controllers\MainController;
+use Controllers\Router\Route\RouteIndex;
+use Controllers\Router\Route\RouteAddPerso;
+use Controllers\Router\Route\RouteAddclasse;
+use Controllers\Router\Route\RouteLogs;
+use Controllers\Router\Route\RouteLogin;
+
+class Router
+{
+    private $routeList = [];
+    private $ctrlList = [];
+    private string $actionKey;
+    private $engine; // Nécessaire pour instancier les contrôleurs
+
+    public function __construct($engine, $name_of_action_key = "action")
+    {
+        $this->engine = $engine;
+        $this->actionKey = $name_of_action_key;
+        
+        //On crée les contrôleurs
+        $this->createControllerList();
+        
+        //On crée les routes
+        $this->createRouteList();
+    }
+
+    private function createControllerList()
+    {
+        // On instancie les contrôleurs ici
+        $this->ctrlList = [
+            'main' => new MainController($this->engine),
+            // 'perso' => new PersoController($this->engine), // Pour plus tard
+        ];
+    }
+
+    private function createRouteList()
+    {
+        $this->routeList = [
+            'index' => new RouteIndex($this->ctrlList['main']),
+            'add-perso' => new RouteAddPerso($this->ctrlList['main']),
+            'add-classe' => new RouteAddClasse($this->ctrlList['main']),
+            'logs' => new RouteLogs($this->ctrlList['main']),
+            'login' => new RouteLogin($this->ctrlList['main']),
+        ];
+    }
+
+    public function routing($get = [], $post = [])
+    {
+        // Récupération de l'action, sinon 'index' par défaut
+        $action = $get[$this->actionKey] ?? 'index';
+
+        // Vérifie si la route existe
+        if (isset($this->routeList[$action])) {
+            $route = $this->routeList[$action];
+            
+            // Si on a des données POST, on appelle post(), sinon get()
+            if (!empty($post)) {
+                $route->action($post, 'POST');
+            } else {
+                $route->action($get, 'GET');
+            }
+        } else {
+            // Si l'action n'existe pas -> redirection vers index ou page 404
+            // Pour l'instant, on redirige vers l'accueil comme demandé
+            $this->routeList['index']->action();
+        }
+    }
+}
