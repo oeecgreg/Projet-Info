@@ -65,7 +65,9 @@ class MainController {
 
     public function displayLogs()
     {
-        echo $this->templates->render('logs', []);
+        $logDAO = new \Models\LogDAO();
+        $logs = $logDAO->getAllLogs(); // On récupère tous les logs en base
+        echo $this->templates->render('logs', ['logs' => $logs]); // On les envoie à la vue
     }
 
     public function displayLogin()
