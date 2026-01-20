@@ -35,10 +35,6 @@ class RouteAddPerso extends Route
 
         // 2. Vérification basique
         if ($name && $classe && $rarity) {
-            
-            $name = $params['name'] ?? null;
-            $rarity = $params['rarity'] ?? null;
-            $classe = $params['classe'] ?? null;
 
             $perso = new \Models\Personnage();
             $perso->setName($name);
