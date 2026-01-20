@@ -2,6 +2,9 @@
 
 namespace Models;
 
+/**
+ * Gère les interactions avec la table Personnages en base de données
+ */
 class PersonnageDAO extends BasePDODAO
 {
     /**
@@ -10,7 +13,7 @@ class PersonnageDAO extends BasePDODAO
      */
     public function getAll(): array
     {
-        // On remplace PERSONNAGE par Brawler
+        // j'ai remplacé Personnage par Brawler
         $sql = "SELECT id, url_img, name, classe, rarity FROM Brawler";
         $stmt = $this->execRequest($sql);
         return $stmt->fetchAll();

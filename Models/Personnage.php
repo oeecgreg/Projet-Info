@@ -2,12 +2,24 @@
 
 namespace Models;
 
+/**
+ * Classe représentant un Brawler (Personnage)
+ */
 class Personnage
 {
+    /** @var int|null Identifiant unique du brawler */
     private ?int $id;
+
+    /** @var string url pour l'image du brawler */
     private string $url_img;
+
+    /** @var string Nom du brawler */
     private string $name;
+
+    /** @var string Classe du brawler */
     private string $classe;
+
+    /** @var string Rareté du brawler */
     private string $rarity;
 
     // Getters
