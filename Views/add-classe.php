@@ -3,7 +3,7 @@
 <div class="form-container">
     <h1>Ajouter une nouvelle Classe</h1>
     
-    <form action="index.php?action=add-perso-classe" method="POST">
+    <form action="index.php?action=add-classe" method="POST">
         
         <div class="form-group">
             <label for="name">Nom de la Classe :</label>

@@ -54,11 +54,15 @@ class RouteEditPerso extends Route
             // 4. Mise à jour via le DAO
             $dao = new PersonnageDAO();
             if ($dao->update($perso)) {
-                header('Location: index.php');
-                exit;
-            } else {
-                echo "Erreur lors de la mise à jour.";
-            }
+                    // --- DEBUT AJOUT LOG ---
+                    $logDAO = new \Models\LogDAO();
+                    $username = $_SESSION['user']['username'] ?? 'Inconnu';
+                    $logDAO->addLog('UPDATE', "A modifié le Brawler : " . $name . " (ID: " . $id . ")", $username);
+                    // --- FIN AJOUT LOG ---
+
+                    header('Location: index.php');
+                    exit;
+                }
         } else {
             echo "Données manquantes.";
         }

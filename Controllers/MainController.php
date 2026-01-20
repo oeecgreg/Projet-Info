@@ -78,10 +78,17 @@ class MainController {
         $dao = new PersonnageDAO();
         $brawler = $dao->getByID($id);
 
+        // AJOUT : On récupère aussi les classes pour le menu déroulant
+        $classeDAO = new \Models\ClasseDAO();
+        $listClasses = $classeDAO->getAll();
+
         if ($brawler) {
-            echo $this->templates->render('edit-perso', ['brawler' => $brawler]);
+            // MODIFICATION : On passe 'listClasses' à la vue
+            echo $this->templates->render('edit-perso', [
+                'brawler' => $brawler,
+                'listClasses' => $listClasses
+            ]);
         } else {
-            // Si l'ID n'existe pas, on redirige vers l'accueil
             header('Location: index.php');
             exit;
         }
