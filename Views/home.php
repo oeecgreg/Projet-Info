@@ -3,6 +3,9 @@
 <div class="container">
     <h1 class="h1">Liste des Brawlers</h1>
 
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Rechercher un Brawler (nom, rareté ou classe)...">
+    </div>
     <table class="brawler-table">
         <thead>
             <tr>
