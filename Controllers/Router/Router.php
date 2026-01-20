@@ -8,6 +8,9 @@ use Controllers\Router\Route\RouteAddPerso;
 use Controllers\Router\Route\RouteAddclasse;
 use Controllers\Router\Route\RouteLogs;
 use Controllers\Router\Route\RouteLogin;
+use Controllers\Router\Route\RouteDelPerso;
+use Controllers\Router\Route\RouteEditPerso;
+use Controllers\Router\Route\RouteLogout;
 
 class Router
 {
@@ -42,9 +45,12 @@ class Router
         $this->routeList = [
             'index' => new RouteIndex($this->ctrlList['main']),
             'add-perso' => new RouteAddPerso($this->ctrlList['main']),
+            'del-perso' => new RouteDelPerso($this->ctrlList['main']),
+            'edit-perso' => new RouteEditPerso($this->ctrlList['main']),
             'add-classe' => new RouteAddClasse($this->ctrlList['main']),
             'logs' => new RouteLogs($this->ctrlList['main']),
             'login' => new RouteLogin($this->ctrlList['main']),
+            'logout' => new RouteLogout(),
         ];
     }
 

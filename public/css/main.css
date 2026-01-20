@@ -1,178 +1,284 @@
+/* --- 1. CONFIGURATION GLOBALE & VARIABLES --- */
+:root {
+    --bg-dark: #161925;      /* Fond très sombre */
+    --bg-card: #202433;      /* Fond des éléments */
+    --primary: #ffc107;      /* Jaune BS */
+    --accent: #00bcd4;       /* Cyan */
+    --text-main: #ffffff;
+    --text-muted: #aab2bd;
+    
+    /* Couleurs de Rareté */
+    --rare-green: #3ade66;
+    --rare-blue: #23baff;
+    --rare-purple: #d13aff;
+    --rare-red: #fe3636;
+    --rare-yellow: #fff11e;
+}
+
+/* --- ANIMATION BG --- */
+.background-animation {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100vh;
+    z-index: -10;
+    overflow: hidden;
+}
+
+.img-grid {
+    display: flex;
+    flex-wrap: wrap;
+    width: 250%; /* + large que l'écran */
+    
+    /* anim de 60 secondes */
+    animation: scrollDiagonal 60s linear infinite;
+}
+
+.img-grid img {
+    width: 120px; /* Taille ajustée pour bien remplir */
+    height: 120px;
+    object-fit: contain;
+    margin: 10px;
+    opacity: 0.6; /* Transparence directe sur l'image */
+    filter: grayscale(30%);
+}
+
+@keyframes scrollDiagonal {
+    0% {
+        transform: translateY(0) translateX(0);
+    }
+    100% {
+        /* Déplacement vers le haut et la gauche (changer ptet le -75) */
+        transform: translateY(-50%) translateX(-50%);   
+    }
+}
+
+.background-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(22, 25, 37, 0.85); /* Voile bleu nuit */
+    z-index: -5;
+}
+
+
+/* On nettoie l'ancien background du body */
 body {
-    background-color: #f0f0f0;
+    background-color: #161925;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-main);
     margin: 0;
-    padding: 0;
+    background-image: none; /* Supprime l'ancien bgd */
+}
+
+/* --- 2. HEADER & NAVIGATION --- */
+header {
+    background-color: #161616; /* Noir transparent */
+    padding: 15px 0;
+    text-align: center;
+    border-bottom: 3px solid var(--primary);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;              
+    margin: 0;
+    display: flex;          
+    justify-content: center; 
+    gap: 30px;               
+}
+
+nav a {
+    color: var(--text-main);
+    text-decoration: none;
+    margin: 0 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 1.1em;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: var(--primary);
+    text-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
 }
 
 .container {
+    width: 90%;
     max-width: 1600px;
-    margin: 20px auto;
+    margin: 40px auto;
     padding: 20px;
-    background: white;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    border-radius: 8px;
 }
 
-.h1 {
+h1 {
     text-align: center;
-    font-family: 'Arial', Helvetica, sans-serif;
-    color: black;
-    margin-bottom: 20px;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 0px #000;
 }
 
-/* ============================
-        Tableau des Brawlers 
-    =========================== */
-
-/* Style pour le tableau des brawlers */
+/* --- 3. TABLEAU DES BRAWLERS --- */
 .brawler-table {
     width: 100%;
-    border-collapse: collapse;
-    font-family: Arial, Helvetica, sans-serif;
-    margin-top: 10px;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    margin-top: 20px;
 }
 
-.brawler-table thead {
-    background-color: #333;
-    color: black;
-    font-size: 30px;
-    border: #cfcaca solid 3px;
+.brawler-table thead th {
+    background-color: transparent;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-size: 0.85em;
+    padding: 15px;
+    border-bottom: 2px solid var(--bg-card);
 }
 
-.brawler-table th {
-    background-color: #f4f4f4;
-    padding: 12px;
-    text-align: center;
-    border-bottom: 2px solid #ddd;
+.brawler-table tbody tr {
+    background-color: var(--bg-card);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.brawler-table tbody tr:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    background-color: #2a2f42;
 }
 
 .brawler-table td {
-    padding: 10px;
-    border-bottom: 1px solid #eee;
+    padding: 15px;
     vertical-align: middle;
     text-align: center;
     font-size: 25px;
 }
 
-/* Style pour les images dans le tableau */
+/* Arrondir les coins des lignes du tableau */
+.brawler-table td:first-child { border-radius: 10px 0 0 10px; }
+.brawler-table td:last-child { border-radius: 0 10px 10px 0; }
+
 .table-img {
-    width: 185px;
-    height: 185px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 2px solid #333;
+    width: 80px;
+    height: 80px;
+    object-fit: contain; /* Garde les proportions */
+    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.5));
 }
 
-/* Style pour les options (icones) */
+/* --- 4. BADGES DE RARETÉ --- */
+.rarity-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 800;
+    text-transform: uppercase;
+    background-color: #444; /* Couleur par défaut */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: inline-block;
+    min-width: 100px;
+    text-align: center;
+}
+
+/* Classes générées par PHP (strtolower) : "premier brawler", "super rare", etc. */
+/* Le sélecteur .class1.class2 cible un élément qui a les deux classes */
+
+.rarity-badge.rare { 
+    background-color: var(--rare-green); 
+    color: #004d1a;
+}
+.rarity-badge.super.rare { 
+    background-color: var(--rare-blue); 
+    color: #003855;
+}
+.rarity-badge.epique { 
+    background-color: var(--rare-purple); 
+    color: #3e0052;
+}
+.rarity-badge.mythique { 
+    background-color: var(--rare-red); 
+    color: #580000;
+}
+.rarity-badge.légendaire { 
+    background-color: var(--rare-yellow); 
+    color: #524c00;
+}
+.rarity-badge.ultra.légendaire { /* Si vous avez cette rareté */
+    background: linear-gradient(45deg, #ff00cc, #3333ff);
+    color: white;
+}
+
+/* --- 5. BOUTONS D'ACTION (Edit / Delete) --- */
 .options a {
     text-decoration: none;
-    margin-right: 10px;
     font-size: 1.2em;
-    transition: opacity 0.2s;
+    margin: 0 5px;
+    display: inline-block;
+    transition: transform 0.2s;
 }
-
 .options a:hover {
-    opacity: 0.7;
+    transform: scale(1.2);
 }
 
-/*Badges de rareté, ptet à supprimer si pas le temps de finir */
-.rarity-badge {
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.9em;
-    font-weight: bold;
-    background: #eee;
-}
-
-/* ============================
-        Navigation Menu 
-    =========================== */
-nav {
-    background-color: #333;
-    padding: 2rem;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Légère ombre vite fait*/
-}
-
-#logo-bs img {
-    height: 100px;
-    vertical-align: middle;
-    position: absolute; 
-    left: 60px;
-    top: 3px;
-}
-
-nav ul {
-    font-family: Arial, Helvetica, sans-serif;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    gap: 40px; /* Espace entre les liens pcq peut poser porbleme */
-    flex-wrap: wrap; 
-}
-
-nav li a {
-    text-decoration: none; /* Enlève le soulignement, c pas beau */
-    color: white;
-    font-weight: bold;
-    font-size: 1.55rem;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s; /* Animation en despi au survol */
-}
-
-nav li a:hover {
-    background-color: #555;
-    color: #ffcc00; /* Petite touche de couleur pas piqué des hannetons */
-}
-
-/* ============================
-        Formulaires 
-============================ */
+/* --- 6. FORMULAIRES (Ajouter / Modifier) --- */
 .form-container {
+    background-color: var(--bg-card);
+    padding: 40px;
+    border-radius: 15px;
     max-width: 500px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin: 40px auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 1px solid #333;
 }
 
 .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 20px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 8px;
+    color: var(--primary);
     font-weight: bold;
-    color: #333;
 }
 
-/* Ajoute 'select' ici pour qu'il ait le même style que les inputs */
-.form-group input, .form-group select {
+.form-group input, 
+.form-group select {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-    background-color: white; /* Important pour les selects */
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid #333;
+    background-color: #161925;
+    color: white;
+    font-size: 1em;
+    outline: none;
+    box-sizing: border-box; /* Important pour ne pas dépasser */
+}
+
+.form-group input:focus, 
+.form-group select:focus {
+    border-color: var(--accent);
 }
 
 .btn-submit {
-    display: block;
     width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
+    padding: 15px;
+    background: linear-gradient(180deg, var(--primary) 0%, #ff8f00 100%);
     border: none;
-    border-radius: 4px;
-    font-size: 1.1rem;
+    border-radius: 8px;
+    color: #3e2723;
+    font-weight: 900;
+    font-size: 1.1em;
+    text-transform: uppercase;
     cursor: pointer;
-    transition: background-color 0.3s;
+    box-shadow: 0 4px 0 #c46e00; /* Effet 3D du bouton */
+    transition: transform 0.1s, box-shadow 0.1s;
 }
 
-.btn-submit:hover {
-    background-color: #0056b3;
+.btn-submit:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 #c46e00;
+}
+
+small {
+    color: var(--text-muted) !important;
 }

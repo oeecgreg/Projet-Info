@@ -26,8 +26,10 @@
                         </span>
                     </td>
                     <td class="options">
-                        <a href="index.php?action=edit-perso&id=<?= $brawler['id'] ?>" title="Modifier">✏️</a>
-                        <a href="index.php?action=del-perso&id=<?= $brawler['id'] ?>" title="Supprimer">🗑️</a>
+                        <?php if(isset($_SESSION['user'])): ?>
+                            <a href="index.php?action=edit-perso&id=<?= $brawler['id'] ?>" title="Modifier">✏️</a>
+                            <a href="index.php?action=del-perso&id=<?= $brawler['id'] ?>" title="Supprimer">🗑️</a>
+                        <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>

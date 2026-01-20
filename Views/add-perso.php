@@ -27,13 +27,11 @@
         <div class="form-group">
             <label for="classe">Classe :</label>
             <select id="classe" name="classe" required>
-                <option value="Tank">Tank</option>
-                <option value="Assassinat">Assassinat</option>
-                <option value="Soutien">Soutien</option>
-                <option value="Contrôle">Contrôle</option>
-                <option value="Dégats bruts">Dégats bruts</option>
-                <option value="Tir d'élite">Tir d'élite</option>
-                <option value="Artillerie">Artillerie</option>
+                <?php foreach($listClasses as $classe): ?>
+                    <option value="<?= $this->e($classe['name']) ?>">
+                        <?= $this->e($classe['name']) ?>
+                    </option>
+                <?php endforeach; ?>
             </select>
         </div>
 

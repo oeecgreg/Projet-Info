@@ -23,13 +23,39 @@ class MainController {
         ]);
     }
 
+    public function login($username, $password)
+    {
+        $userDAO = new \Models\UserDAO();
+        $user = $userDAO->findByUsername($username);
+
+        // On vérifie si l'utilisateur existe ET si le mot de passe est correct
+        if ($user && password_verify($password, $user->getPassword())) {
+            // AUTHENTIFICATION RÉUSSIE
+            $_SESSION['user'] = [
+                'id' => $user->getId(),
+                'username' => $user->getUsername()
+            ];
+            header('Location: index.php');
+            exit;
+        } else {
+            // ÉCHEC : On réaffiche le formulaire avec une erreur
+            echo $this->templates->render('login', ['error' => 'Identifiants incorrects.']);
+        }
+    }
+
     // --- Méthodes de navigation ---
 
     public function displayAddPerso()
     {
-        echo $this->templates->render('add-perso', []);
-    }
+        // On récupère les classes depuis la base de données
+        $classeDAO = new \Models\ClasseDAO();
+        $listClasses = $classeDAO->getAll();
 
+        // On passe la liste à la vue
+        echo $this->templates->render('add-perso', [
+            'listClasses' => $listClasses
+        ]);
+    }
     // C'est cette méthode qui était manquante pour ta page !
     public function displayAddClasse()
     {
@@ -45,5 +71,19 @@ class MainController {
     public function displayLogin()
     {
         echo $this->templates->render('login', []);
+    }
+
+    public function displayEditPerso($id)
+    {
+        $dao = new PersonnageDAO();
+        $brawler = $dao->getByID($id);
+
+        if ($brawler) {
+            echo $this->templates->render('edit-perso', ['brawler' => $brawler]);
+        } else {
+            // Si l'ID n'existe pas, on redirige vers l'accueil
+            header('Location: index.php');
+            exit;
+        }
     }
 }

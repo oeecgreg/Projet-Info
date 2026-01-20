@@ -18,5 +18,11 @@ class RouteLogin extends Route
         return $this->controller->displayLogin();
     }
 
-    public function post($params = []) {}
+    public function post($params = [])
+    {
+        $username = $params['username'] ?? null;
+        $password = $params['password'] ?? null;
+
+        return $this->controller->login($username, $password);
+    }
 }
