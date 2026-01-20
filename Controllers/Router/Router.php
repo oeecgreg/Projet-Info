@@ -5,7 +5,7 @@ namespace Controllers\Router;
 use Controllers\MainController;
 use Controllers\Router\Route\RouteIndex;
 use Controllers\Router\Route\RouteAddPerso;
-use Controllers\Router\Route\RouteAddclasse;
+use Controllers\Router\Route\RouteAddClasse;
 use Controllers\Router\Route\RouteLogs;
 use Controllers\Router\Route\RouteLogin;
 use Controllers\Router\Route\RouteDelPerso;

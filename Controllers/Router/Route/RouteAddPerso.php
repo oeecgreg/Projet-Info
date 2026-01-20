@@ -40,25 +40,24 @@ class RouteAddPerso extends Route
             $rarity = $params['rarity'] ?? null;
             $classe = $params['classe'] ?? null;
 
-            if ($name && $rarity && $classe) {
-                $perso = new \Models\Personnage();
-                $perso->setName($name);
-                $perso->setRarity($rarity);
-                $perso->setClasse($classe);
-                $perso->setUrlImg("public/img/" . $name . ".png");
+            $perso = new \Models\Personnage();
+            $perso->setName($name);
+            $perso->setRarity($rarity);
+            $perso->setClasse($classe);
+            $perso->setUrlImg("public/img/" . $name . ".png");
 
-                $dao = new \Models\PersonnageDAO();
-                if ($dao->add($perso)) {
-                    // --- DEBUT AJOUT LOG ---
-                    $logDAO = new \Models\LogDAO();
-                    $username = $_SESSION['user']['username'] ?? 'Inconnu';
-                    $logDAO->addLog('ADD', "A ajouté le Brawler : " . $name, $username);
-                    // --- FIN AJOUT LOG ---
+            $dao = new \Models\PersonnageDAO();
+            if ($dao->add($perso)) {
+                // --- DEBUT AJOUT LOG ---
+                $logDAO = new \Models\LogDAO();
+                $username = $_SESSION['user']['username'] ?? 'Inconnu';
+                $logDAO->addLog('ADD', "A ajouté le Brawler : " . $name, $username);
+                // --- FIN AJOUT LOG ---
 
-                    header('Location: index.php');
-                    exit;
-                }
+                header('Location: index.php');
+                exit;
             }
+
         } else {
             echo "Veuillez remplir tous les champs.";
         }
