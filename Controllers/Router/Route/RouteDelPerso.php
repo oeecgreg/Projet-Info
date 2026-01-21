@@ -14,24 +14,36 @@ class RouteDelPerso extends Route
         $this->controller = $controller;
     }
 
-    // La suppression se fait généralement via un lien (GET) dans votre tableau
+    // La suppression se fait via un lien (GET) dans le tableau
     public function get($params = [])
     {
         $id = $params['id'] ?? null;
+
         if ($id) {
             $dao = new \Models\PersonnageDAO();
-            // Optionnel : récupérer le nom avant de supprimer pour le log
+            //On récupère les infos avant suppression pour le message
             $brawler = $dao->getByID($id);
             $name = $brawler ? $brawler['name'] : "Inconnu";
 
             if ($dao->delete($id)) {
-                // --- DEBUT AJOUT LOG ---
+                // --- LOG ---
                 $logDAO = new \Models\LogDAO();
                 $username = $_SESSION['user']['username'] ?? 'Inconnu';
                 $logDAO->addLog('DELETE', "A supprimé le Brawler : " . $name . " (ID: " . $id . ")", $username);
-                // --- FIN AJOUT LOG ---
+
+                // --- MESSAGE FLASH SUCCESS ---
+                $_SESSION['flash_message'] = "Le Brawler <strong>" . $name . "</strong> a été supprimé avec succès.";
+                $_SESSION['flash_type'] = "success";
+            } else {
+                // --- MESSAGE FLASH ERROR ---
+                $_SESSION['flash_message'] = "Erreur : Impossible de supprimer le Brawler.";
+                $_SESSION['flash_type'] = "error";
             }
+        } else {
+            $_SESSION['flash_message'] = "Erreur : ID invalide.";
+            $_SESSION['flash_type'] = "error";
         }
+
         header('Location: index.php');
         exit;
     }

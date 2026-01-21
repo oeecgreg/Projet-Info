@@ -25,46 +25,49 @@ class RouteEditPerso extends Route
     // POST : On enregistre les modifications
     public function post($params = [])
     {
-        // 1. Récupération des données (y compris l'ID caché)
         $id = $params['id'] ?? null;
         $name = $params['name'] ?? null;
         $classe = $params['classe'] ?? null;
         $rarity = $params['rarity'] ?? null;
 
         if ($id && $name && $classe && $rarity) {
-            
-            // 2. Création de l'objet avec les nouvelles données
-            $perso = new Personnage();
-            $perso->setId((int)$id);
+            $perso = new \Models\Personnage();
+            $perso->setId($id); // Important pour le UPDATE
             $perso->setName($name);
-            $perso->setClasse($classe);
             $perso->setRarity($rarity);
-            
-            // 3. Gestion de l'image (Même logique que pour l'ajout)
-            // Si le nom change, l'image change aussi !
-            $imageName = str_replace(' ', '', $name); 
-            $targetPath = "public/img/$imageName.png";
+            $perso->setClasse($classe);
+            $perso->setUrlImg("public/img/" . $name . ".png");
 
-            if (file_exists($targetPath)) {
-                $perso->setUrlImg($targetPath);
-            } else {
-                $perso->setUrlImg("public/img/unknown.png");
-            }
+            $dao = new \Models\PersonnageDAO();
 
-            // 4. Mise à jour via le DAO
-            $dao = new PersonnageDAO();
             if ($dao->update($perso)) {
-                    // --- DEBUT AJOUT LOG ---
-                    $logDAO = new \Models\LogDAO();
-                    $username = $_SESSION['user']['username'] ?? 'Inconnu';
-                    $logDAO->addLog('UPDATE', "A modifié le Brawler : " . $name . " (ID: " . $id . ")", $username);
-                    // --- FIN AJOUT LOG ---
+                // --- LOG ---
+                $logDAO = new \Models\LogDAO();
+                $username = $_SESSION['user']['username'] ?? 'Inconnu';
+                $logDAO->addLog('UPDATE', "A modifié le Brawler : " . $name . " (ID: " . $id . ")", $username);
 
-                    header('Location: index.php');
-                    exit;
-                }
+                // --- MESSAGE FLASH SUCCESS ---
+                $_SESSION['flash_message'] = "Le Brawler <strong>" . $name . "</strong> a été modifié avec succès !";
+                $_SESSION['flash_type'] = "success";
+
+                header('Location: index.php');
+                exit;
+            } else {
+                // --- MESSAGE FLASH ERROR ---
+                $_SESSION['flash_message'] = "Erreur lors de la modification du Brawler.";
+                $_SESSION['flash_type'] = "error";
+                
+                // En cas d'erreur, on pourrait peut-etre rediriger vers le formulaire, 
+                // mais ici on renvoie direct à l'accueil pour simplifier.
+                header('Location: index.php');
+                exit;
+            }
         } else {
-            echo "Données manquantes.";
+            // Gestion des champs vides
+            $_SESSION['flash_message'] = "Veuillez remplir tous les champs.";
+            $_SESSION['flash_type'] = "error";
+            header("Location: index.php?action=edit-perso&id=" . $id);
+            exit;
         }
     }
 }

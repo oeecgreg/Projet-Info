@@ -28,7 +28,7 @@ class RouteAddPerso extends Route
     // Traite le formulaire (méthode POST)
     public function post($params = [])
     {
-        // Récupération des données du formulaire et vérification que le formulaire est complet
+        // Récup des données du formulaire et vérification que le formulaire est complet
         $name = $params['name'] ?? null;
         $classe = $params['classe'] ?? null;
         $rarity = $params['rarity'] ?? null;
@@ -40,20 +40,36 @@ class RouteAddPerso extends Route
             $perso->setName($name);
             $perso->setRarity($rarity);
             $perso->setClasse($classe);
-            $perso->setUrlImg("public/img/" . $name . ".png");
+            // --- Gestion du cas ou l'image existe pas (image générer par le nom du brawler dans le formulaire) ---
+            $targetImage = "public/img/" . $name . ".png";
+            
+            if (file_exists($targetImage)) {
+                $perso->setUrlImg($targetImage);
+            } else {
+                // Si l'image n'existe pas, on met l'image unknown par défaut
+                $perso->setUrlImg("public/img/unknown.png");
+            }
+            // ---------------------------------------
+            
 
-            $dao = new PersonnageDAO();
+            $dao = new \Models\PersonnageDAO();
             if ($dao->add($perso)) {
-                // --- DEBUT AJOUT LOG ---
+                // parti logs
                 $logDAO = new \Models\LogDAO();
                 $username = $_SESSION['user']['username'] ?? 'Inconnu';
                 $logDAO->addLog('ADD', "A ajouté le Brawler : " . $name, $username);
-                // --- FIN AJOUT LOG ---
+
+                // msg de succès
+                $_SESSION['flash_message'] = "Le Brawler <strong>" . $name . "</strong> a été ajouté avec succès !";
+                $_SESSION['flash_type'] = "success"; // vert
 
                 header('Location: index.php');
                 exit;
+            } else {
+                // message d'erreur
+                $_SESSION['flash_message'] = "Erreur : Impossible d'ajouter le Brawler.";
+                $_SESSION['flash_type'] = "error"; // rouge
             }
-
         } else {
             echo "Veuillez remplir tous les champs.";
         }
