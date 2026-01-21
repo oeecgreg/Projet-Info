@@ -1,6 +1,13 @@
 <!-- Page d'inscription -->
 <?php $this->layout('template', ['title' => 'Inscription']) ?>
 
+<?php if(isset($_SESSION['flash_message'])): ?>
+    <div class="alert alert-<?= $_SESSION['flash_type'] ?>">
+        <?= $_SESSION['flash_message'] ?>
+    </div>
+    <?php unset($_SESSION['flash_message'], $_SESSION['flash_type']); ?>
+<?php endif; ?>
+
 <div class="form-container">
     <h1>Créer un compte</h1>
     

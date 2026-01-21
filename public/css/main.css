@@ -71,6 +71,17 @@ body {
     color: var(--text-main);
     margin: 0;
     background-image: none; /* Supprime l'ancien bgd */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* 100% de la hauteur du "Viewport" (écran) */
+    margin: 0; /* On retire les marges par défaut pour éviter les scrollbars inutiles */
+}
+
+/* 2. On dit au contenu principal de grandir pour occuper l'espace vide */
+main {
+    flex: 1; 
+    width: 100%; /* Pour être sûr qu'il prenne toute la largeur */
+    padding-bottom: 20px; /* Un peu d'espace avant le footer, optionnel */
 }
 
 /* ====================================
@@ -115,6 +126,7 @@ footer {
     padding: 15px 0;
     border-top: 3px solid var(--primary);
     margin-top: 40px;
+    margin-bottom: 0px;
     font-size: 0.9em;
 }
 
