@@ -142,7 +142,6 @@ class MainController {
         $dao = new PersonnageDAO();
         $brawler = $dao->getByID($id);
 
-        // AJOUT : On récupère aussi les classes pour le menu déroulant
         $classeDAO = new \Models\ClasseDAO();
         $rarityDAO = new \Models\RarityDAO();
 
@@ -151,7 +150,6 @@ class MainController {
         $listRarities = $rarityDAO->getAll();
 
         if ($brawler) {
-            // MODIFICATION : On passe 'listClasses' à la vue
             echo $this->templates->render('edit-perso', [
                 'brawler' => $brawler,
                 'listClasses' => $listClasses,
@@ -178,5 +176,14 @@ class MainController {
         echo $this->templates->render('my-collection', [
             'brawlers' => $myBrawlers
         ]);
+    }
+
+    /**
+     * Affiche la page d'inscription
+     * @return void
+     */
+    public function displayRegister()
+    {
+        echo $this->templates->render('register');
     }
 }

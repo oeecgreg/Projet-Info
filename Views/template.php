@@ -32,20 +32,20 @@ shuffle($images);
             <nav>
                 <ul>
                     <li><a href="index.php">Accueil</a></li>
+                    
                     <?php if(isset($_SESSION['user'])): ?>
-                        <li><a href="index.php?action=add-perso">Ajouter un Brawler</a></li>
-                        <li><a href="index.php?action=add-classe">Ajouter une Classe</a></li>
-                        <li><a href="index.php?action=add-rarity">Ajouter une Rareté</a></li>
-                        <li><a href="index.php?action=logs">Journal (Logs)</a></li>
-                    <?php endif; ?>
-                    <?php if(isset($_SESSION['user'])): ?>
-                        <li><a href="index.php?action=my-collection">Ma Collection</a></li> <li><a href="index.php?action=add-perso">Ajouter un Brawler</a></li>
-                    <?php endif; ?>
-                    <?php if(!isset($_SESSION['user'])): ?>
-                        <li><a href="index.php?action=login">Connexion</a></li>
-                    <?php else: ?>
+                        <?php if($_SESSION['user']['username'] === 'admin'): ?>
+                            <li><a href="index.php?action=add-perso">Ajouter un Brawler</a></li>
+                            <li><a href="index.php?action=add-classe">Ajouter une Classe</a></li>
+                            <li><a href="index.php?action=add-rarity">Ajouter une Rareté</a></li>
+                            <li><a href="index.php?action=logs">Logs</a></li>
+                        <?php endif; ?>
+                        <li><a href="index.php?action=my-collection">Ma Collection</a></li>
                         <li><a href="index.php?action=logout">Déconnexion (<?= $_SESSION['user']['username'] ?>)</a></li>
-                    <?php endif; ?>
+                        
+                    <?php else: ?>
+                        <li><a href="index.php?action=login">Connexion</a></li>
+                        <li><a href="index.php?action=register">Inscription</a></li> <?php endif; ?>
                 </ul>
             </nav>
         </header>

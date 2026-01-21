@@ -11,6 +11,8 @@ use Models\ClasseDAO;
  */
 class RouteAddClasse extends Route
 {
+    protected bool $isProtected = true;
+    
     private MainController $controller;
 
     /**
@@ -29,11 +31,15 @@ class RouteAddClasse extends Route
      */
     public function get($params = [])
     {
-        // Sécurité : vérifier la session
-        if(!isset($_SESSION['user'])) {
-            header('Location: index.php?action=login');
+        // --- SÉCURITÉ ADMIN ---
+        // Si l'utilisateur n'est pas "admin", on refuse son accès 
+        if ($_SESSION['user']['username'] !== 'admin') {
+            $_SESSION['flash_message'] = "Accès refusé : Réservé à l'administrateur.";
+            $_SESSION['flash_type'] = "error";
+            header('Location: index.php');
             exit;
         }
+        // ----------------------
         return $this->controller->displayAddClasse();
     }
 

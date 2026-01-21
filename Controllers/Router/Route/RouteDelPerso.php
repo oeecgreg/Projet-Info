@@ -30,8 +30,18 @@ class RouteDelPerso extends Route
     {
         $id = $params['id'] ?? null;
 
+        // --- SÉCURITÉ ADMIN ---
+        // Si l'utilisateur n'est pas "admin", on refuse son accès 
+        if ($_SESSION['user']['username'] !== 'admin') {
+            $_SESSION['flash_message'] = "Accès refusé : Réservé à l'administrateur.";
+            $_SESSION['flash_type'] = "error";
+            header('Location: index.php');
+            exit;
+        }
+        // ----------------------
+
         if ($id) {
-            $dao = new \Models\PersonnageDAO();
+            $dao = new PersonnageDAO();
             //On récupère les infos avant suppression pour le message
             $brawler = $dao->getByID($id);
             $name = $brawler ? $brawler['name'] : "Inconnu";

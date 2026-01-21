@@ -27,6 +27,15 @@ class RouteLogs extends Route
      */
     public function get($params = [])
     {
+        // --- SÉCURITÉ ADMIN ---
+        // Si l'utilisateur n'est pas "admin", on refuse son accès 
+        if ($_SESSION['user']['username'] !== 'admin') {
+            $_SESSION['flash_message'] = "Accès refusé : Réservé à l'administrateur.";
+            $_SESSION['flash_type'] = "error";
+            header('Location: index.php');
+            exit;
+        }
+        // ----------------------
         return $this->controller->displayLogs();
     }
 

@@ -24,7 +24,9 @@
 
             <?php if(isset($_SESSION['user'])): ?>
                 <th>Collection</th>
-                <th>Options</th>
+                <?php if(isset($_SESSION['user']) && $_SESSION['user']['username'] === 'admin'): ?>
+                    <th>Options</th>
+                <?php endif; ?>
             <?php endif; ?>
         </tr>
     </thead>
@@ -53,11 +55,14 @@
                         <?php endif; ?>
                     </td>
 
-                    <td>
-                        <a href="index.php?action=edit-perso&id=<?= $brawler['id'] ?>" class="btn-edit">✏️</a>
-                        <a href="index.php?action=del-perso&id=<?= $brawler['id'] ?>" class="btn-delete" 
-                           onclick="return confirm('Êtes-vous sûr ?')">🗑️</a>
-                    </td>
+                    <!-- Options d'édition/suppression pour l'admin -->
+                    <?php if(isset($_SESSION['user']) && $_SESSION['user']['username'] === 'admin'): ?>
+                        <td>
+                            <a href="index.php?action=edit-perso&id=<?= $brawler['id'] ?>" class="btn-edit">✏️</a>
+                            <a href="index.php?action=del-perso&id=<?= $brawler['id'] ?>" class="btn-delete" 
+                            onclick="return confirm('Êtes-vous sûr ?')">🗑️</a>
+                        </td>
+                    <?php endif; ?>
                 <?php endif; ?>
             </tr>
         <?php endforeach; ?>

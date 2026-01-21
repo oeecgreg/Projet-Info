@@ -28,6 +28,15 @@ class RouteEditPerso extends Route
      */
     public function get($params = [])
     {
+        // --- SÉCURITÉ ADMIN ---
+        // Si l'utilisateur n'est pas "admin", on refuse son accès 
+        if ($_SESSION['user']['username'] !== 'admin') {
+            $_SESSION['flash_message'] = "Accès refusé : Réservé à l'administrateur.";
+            $_SESSION['flash_type'] = "error";
+            header('Location: index.php');
+            exit;
+        }
+        // ----------------------
         $id = $params['id'] ?? null;
         return $this->controller->displayEditPerso($id);
     }
@@ -44,14 +53,14 @@ class RouteEditPerso extends Route
         $rarity = $params['rarity'] ?? null;
 
         if ($id && $name && $classe && $rarity) {
-            $perso = new \Models\Personnage();
+            $perso = new Personnage();
             $perso->setId($id); // Important pour le UPDATE
             $perso->setName($name);
             $perso->setRarity($rarity);
             $perso->setClasse($classe);
             $perso->setUrlImg("public/img/" . $name . ".png");
 
-            $dao = new \Models\PersonnageDAO();
+            $dao = new PersonnageDAO();
 
             if ($dao->update($perso)) {
                 // --- LOG ---

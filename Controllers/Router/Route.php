@@ -48,12 +48,12 @@ abstract class Route
 
     /**
      * Vérifie si l'utilisateur a le droit d'accéder à la route
-     * @throws \Exception Si accès refusé
+     * @throws Exception Si accès refusé
      */
     public function protectRoute(): void
     {
         if ($this->isProtected && !isset($_SESSION['user'])) {
-            throw new \Exception("Accès refusé");
+            throw new Exception("Accès refusé");
         }
     }
 

@@ -10,6 +10,9 @@ use Models\RarityDAO;
  * Route pour l'ajout d'une rareté
  */
 class RouteAddRarity extends Route {
+
+    protected bool $isProtected = true;
+
     private MainController $controller;
 
     /**
@@ -26,11 +29,15 @@ class RouteAddRarity extends Route {
      * @return void
      */
     public function get($params = []) {
-        if(!isset($_SESSION['user'])) {
-            header('Location: index.php?action=login');
+        // --- SÉCURITÉ ADMIN ---
+        // Si l'utilisateur n'est pas "admin", on refuse son accès 
+        if ($_SESSION['user']['username'] !== 'admin') {
+            $_SESSION['flash_message'] = "Accès refusé : Réservé à l'administrateur.";
+            $_SESSION['flash_type'] = "error";
+            header('Location: index.php');
             exit;
         }
-        // On demande au contrôleur d'afficher le formulaire
+        // ----------------------
         return $this->controller->displayAddRarity();
     }
 
