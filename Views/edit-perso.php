@@ -1,8 +1,10 @@
+<!-- Page pour modifier un Brawler -->
 <?php $this->layout('template', ['title' => 'Modifier un Brawler']) ?>
 
 <div class="form-container">
     <h1>Modifier <?= $this->e($brawler['name']) ?></h1>
     
+    <!-- Formulaire de modification de brawler -->
     <form action="index.php?action=edit-perso&id=<?= $brawler['id'] ?>" method="POST">
         <input type="hidden" name="id" value="<?= $brawler['id'] ?>">    
 
@@ -11,6 +13,7 @@
             <input type="text" id="name" name="name" required value="<?= $this->e($brawler['name']) ?>">
         </div>
 
+        <!-- AJOUT : Menu déroulant pour les raretés -->
         <div class="form-group">
             <label for="rarity">Rareté :</label>
             <select id="rarity" name="rarity" required>
@@ -23,6 +26,7 @@
             </select>
         </div>
 
+        <!-- AJOUT : Menu déroulant pour les classes -->
         <div class="form-group">
             <label for="classe">Classe :</label>
             <select id="classe" name="classe" required>

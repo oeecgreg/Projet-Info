@@ -4,9 +4,17 @@ namespace Controllers\Router;
 
 use Exception;
 
+/**
+ * Classe abstraite de base pour toutes les routes
+ */
 abstract class Route
 {
-    // Méthode principale appelée par le routeur
+    /** 
+     * Gère les requêtes en fonction de la méthode HTTP
+     * @param array $params Paramètres de la requête
+     * @param string $method Méthode HTTP ('GET' ou 'POST')
+     * @return void
+     */
     public function action($params = [], $method = 'GET')
     {
         if ($method === 'GET') {
@@ -16,7 +24,14 @@ abstract class Route
         }
     }
 
-    // Méthode utilitaire pour récupérer un paramètre en sécurité (décrite en page 3)
+    /** 
+     * Récupère un paramètre d'un tableau avec gestion des erreurs
+     * @param array $array Le tableau de paramètres
+     * @param string $paramName Le nom du paramètre à récupérer
+     * @param bool $canBeEmpty Indique si le paramètre peut être vide
+     * @return mixed La valeur du paramètre
+     * @throws Exception Si le paramètre est absent ou vide (selon $canBeEmpty)
+     */
     protected function getParam(array $array, string $paramName, bool $canBeEmpty = true)
     {
         if (isset($array[$paramName])) {
@@ -29,7 +44,7 @@ abstract class Route
         }
     }
 
-    // Méthodes abstraites à définir dans chaque route fille
+    // Méthodes abstraites à implémenter dans les classes dérivées
     abstract public function get($params = []);
     abstract public function post($params = []);
 }

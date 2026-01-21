@@ -9,7 +9,7 @@ class PersonnageDAO extends BasePDODAO
 {
     /**
      * Récupère tous les brawlers avec leur couleur de rareté
-     * @return array Données brutes de la table
+     * @return array Données brutes de la table brawler avec couleur
      */
     public function getAll(): array
     {
@@ -47,7 +47,7 @@ class PersonnageDAO extends BasePDODAO
      * @param Personnage $perso L'objet personnage à ajouter
      * @return bool True si l'ajout a réussi
      */
-    public function add(\Models\Personnage $perso): bool
+    public function add(Personnage $perso): bool
     {
         $sql = "INSERT INTO brawler (name, classe, rarity, url_img) VALUES (:name, :classe, :rarity, :url_img)";
         
@@ -88,7 +88,7 @@ class PersonnageDAO extends BasePDODAO
      * @param Personnage $perso
      * @return bool
      */
-    public function update(\Models\Personnage $perso): bool
+    public function update(Personnage $perso): bool
     {
         $sql = "UPDATE brawler SET name = :name, classe = :classe, rarity = :rarity, url_img = :url_img WHERE id = :id";
         

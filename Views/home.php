@@ -1,13 +1,16 @@
+<!-- Page d'affichage de la liste des Brawlers -->
 <?php $this->layout('template', ['title' => 'Liste des Brawlers']) ?>
 
 <div class="container">
     <h1 class="h1">Liste des Brawlers</h1>
 
+    <!-- Affichage des messages flash -->
     <?php if(isset($flash_message) && $flash_message): ?>
         <div class="alert alert-<?= $flash_type ?>">
             <?= $flash_message ?> </div>
     <?php endif; ?>
 
+    <!-- Barre de recherche -->
     <div class="search-container">
         <input type="text" id="searchInput" placeholder="Rechercher un Brawler (nom, rareté ou classe)...">
     </div>
@@ -20,6 +23,8 @@
                 <th>Rareté</th>
                 <th>Options</th> </tr>
         </thead>
+
+        <!-- Corps du tableau avec les Brawlers -->
         <tbody>
             <?php foreach ($listPersonnage as $brawler): ?>
                 <tr>

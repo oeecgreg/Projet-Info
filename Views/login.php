@@ -1,3 +1,4 @@
+<!-- Page de connexion admin -->
 <?php $this->layout('template', ['title' => 'Connexion']) ?>
 
 <div class="form-container">

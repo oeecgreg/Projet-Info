@@ -6,16 +6,28 @@ use Controllers\MainController;
 use Models\Personnage;
 use Models\PersonnageDAO;
 
+/**
+ * Route pour l'ajout d'un brawler
+ */
 class RouteAddPerso extends Route
 {
     private MainController $controller;
 
+    /**
+     * Constructeur
+     * @param MainController $controller Le contrôleur principal
+     */
     public function __construct(MainController $controller)
     {
         $this->controller = $controller;
     }
 
-    // Affiche le formulaire (méthode GET)
+
+    /**
+     * Gère la requête GET pour afficher le formulaire d'ajout de brawler
+     * @param mixed $params
+     * @return void
+     */
     public function get($params = [])
     {
         if(!isset($_SESSION["user"])) {
@@ -25,7 +37,10 @@ class RouteAddPerso extends Route
         return $this->controller->displayAddPerso();
     }
 
-    // Traite le formulaire (méthode POST)
+    /**
+     * Traite le formulaire
+     * @param mixed $params
+     */
     public function post($params = [])
     {
         // Récup des données du formulaire et vérification que le formulaire est complet

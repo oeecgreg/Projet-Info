@@ -1,7 +1,6 @@
+<!-- Modèle de template principal avec animation de fond et navigation -->
 <?php
-// 1. On récupère automatiquement toutes les images du dossier
 $images = glob('public/img/*.png'); 
-// 2. On les mélange pour avoir un ordre différent à chaque fois (optionnel)
 shuffle($images);
 ?>
 <!doctype html>
@@ -26,6 +25,8 @@ shuffle($images);
                 ?>
             </div>
         </div>
+
+        <!-- Overlay pour assombrir le fond -->
         <div class="background-overlay"></div>
         <header>
             <nav>
@@ -46,12 +47,18 @@ shuffle($images);
                 </ul>
             </nav>
         </header>
+
+        <!-- Contenu principal de la page -->
         <main id="contenu">
             <?=$this->section('content')?>
         </main>
         <footer>
         </footer>
+
+        <!-- Script pour la recherche et le tri dans la table des Brawlers -->
         <script>
+
+        // Recherche en temps réel par nom, rareté ou classe
         document.getElementById('searchInput').addEventListener('keyup', function() {
             let filter = this.value.toLowerCase();
             let rows = document.querySelectorAll('.brawler-table tbody tr');
@@ -68,6 +75,7 @@ shuffle($images);
             });
         });
 
+        // Tri des colonnes au clic sur l'en-tête
         document.querySelectorAll('.brawler-table th').forEach((header, index) => {
             // On ne trie pas la colonne "Image" (index 0) ni "Options" (index 4)
             if (index === 0 || index === 4) return;

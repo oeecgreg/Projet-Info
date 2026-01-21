@@ -1,3 +1,4 @@
+<!-- Point d'entrée principal de l'application PHP -->
 <?php
 
 session_start();

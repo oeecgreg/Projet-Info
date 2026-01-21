@@ -5,16 +5,27 @@ use Controllers\Router\Route;
 use Controllers\MainController;
 use Models\PersonnageDAO;
 
+/**
+ * Route pour la suppression d'un brawler
+ */
 class RouteDelPerso extends Route
 {
     private MainController $controller;
 
+    /**
+     * Constructeur
+     * @param MainController $controller Le contrôleur principal
+     */
     public function __construct(MainController $controller)
     {
         $this->controller = $controller;
     }
 
-    // La suppression se fait via un lien (GET) dans le tableau
+    /**
+     * Gère la requête GET pour supprimer un brawler
+     * @param mixed $params
+     * @return void
+     */
     public function get($params = [])
     {
         $id = $params['id'] ?? null;
@@ -48,6 +59,10 @@ class RouteDelPerso extends Route
         exit;
     }
 
+    /**
+     * Pas de requête POST pour cette route
+     * @param mixed $params
+     */
     public function post($params = [])
     {
         // Pas de formulaire POST pour la suppression ici

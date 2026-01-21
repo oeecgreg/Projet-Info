@@ -6,23 +6,36 @@ use Controllers\MainController;
 use Models\Personnage;
 use Models\PersonnageDAO;
 
+/**
+ * Route pour la modification d'un brawler
+ */
 class RouteEditPerso extends Route
 {
     private MainController $controller;
 
+    /**
+     * Constructeur
+     * @param MainController $controller Le contrôleur principal
+     */
     public function __construct(MainController $controller)
     {
         $this->controller = $controller;
     }
 
-    // GET : On affiche le formulaire pré-rempli
+    /**
+     * Gère la requête GET pour afficher le formulaire de modification d'un brawler
+     * @param mixed $params
+     */
     public function get($params = [])
     {
         $id = $params['id'] ?? null;
         return $this->controller->displayEditPerso($id);
     }
 
-    // POST : On enregistre les modifications
+    /**
+     * Gère la requête POST pour traiter le formulaire de modification d'un brawler
+     * @param mixed $params
+     */
     public function post($params = [])
     {
         $id = $params['id'] ?? null;

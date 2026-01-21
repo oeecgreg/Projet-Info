@@ -17,7 +17,8 @@ class MainController {
         $this->templates = $engine;
     }
 
-    /* Affiche la page d'accueil avec la liste des brawlers
+    /**
+     * Affiche la page d'accueil avec la liste des brawlers
      * @return void
      */
     public function index() : void {

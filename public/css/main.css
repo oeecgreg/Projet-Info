@@ -1,4 +1,6 @@
-/* --- 1. CONFIGURATION GLOBALE & VARIABLES --- */
+/* ====================================
+   1. CONFIGURATION GLOBALE & VARIABLES
+   ==================================== */
 :root {
     --bg-dark: #161925;      /* Fond très sombre */
     --bg-card: #202433;      /* Fond des éléments */
@@ -15,7 +17,9 @@
     --rare-yellow: #fff11e;
 }
 
-/* --- ANIMATION BG --- */
+/* ====================================
+   2. ANIMATIONS DE FOND
+   ==================================== */
 .background-animation {
     position: fixed;
     top: 0; left: 0;
@@ -60,8 +64,7 @@
     z-index: -5;
 }
 
-
-/* On nettoie l'ancien background du body */
+/* Nettoyage et style du body */
 body {
     background-color: #161925;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -70,7 +73,9 @@ body {
     background-image: none; /* Supprime l'ancien bgd */
 }
 
-/* --- 2. HEADER & NAVIGATION --- */
+/* ====================================
+   3. HEADER & NAVIGATION
+   ==================================== */
 header {
     background-color: #161616; /* Noir transparent */
     padding: 15px 0;
@@ -103,6 +108,9 @@ nav a:hover {
     text-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
 }
 
+/* ====================================
+   4. CONTAINER & TITRES
+   ==================================== */
 .container {
     width: 90%;
     max-width: 1600px;
@@ -119,7 +127,9 @@ h1 {
     text-shadow: 2px 2px 0px #000;
 }
 
-/* --- 3. TABLEAU DES BRAWLERS --- */
+/* ====================================
+   5. TABLEAU DES BRAWLERS/PERSONNAGES
+   ==================================== */
 .brawler-table {
     width: 100%;
     border-collapse: separate;
@@ -174,7 +184,9 @@ h1 {
     filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.5));
 }
 
-/* --- 4. BADGES DE RARETÉ --- */
+/* ====================================
+   6. BADGES DE RARETÉ
+   ==================================== */
 .rarity-badge {
     padding: 6px 12px;
     border-radius: 20px;
@@ -216,7 +228,9 @@ h1 {
     color: white;
 }
 
-/* --- 5. BOUTONS D'ACTION (Edit / Delete) --- */
+/* ====================================
+   7. BOUTONS D'ACTION (Édition/Suppression)
+   ==================================== */
 .options a {
     text-decoration: none;
     font-size: 1.2em;
@@ -228,7 +242,9 @@ h1 {
     transform: scale(1.2);
 }
 
-/* --- 6. FORMULAIRES (Ajouter / Modifier) --- */
+/* ====================================
+   8. FORMULAIRES (Ajouter / Modifier)
+   ==================================== */
 .form-container {
     background-color: var(--bg-card);
     padding: 40px;
@@ -283,15 +299,22 @@ h1 {
     transition: transform 0.1s, box-shadow 0.1s;
 }
 
+/* État actif du bouton */
 .btn-submit:active {
     transform: translateY(4px);
     box-shadow: 0 0 0 #c46e00;
 }
 
+/* ====================================
+   9. TEXTES ET ÉLÉMENTS SUPPLÉMENTAIRES
+   ==================================== */
 small {
     color: var(--text-muted) !important;
 }
 
+/* ====================================
+   10. BARRE DE RECHERCHE
+   ==================================== */
 .search-container {
     margin-bottom: 20px;
     display: flex;
@@ -317,7 +340,9 @@ small {
     box-shadow: 0 0 15px var(--primary);
 }
 
-/* Messages Flash */
+/* ====================================
+   11. MESSAGES D'ALERTE/NOTIFICATION
+   ==================================== */
 .alert {
     padding: 15px;
     margin: 20px auto;
@@ -329,18 +354,21 @@ small {
     animation: slideIn 0.5s ease-out;
 }
 
+/* Styles de succès */
 .alert-success {
     background-color: #d4edda;
     color: #155724;
     border: 2px solid #c3e6cb;
 }
 
+/* Styles d'erreur */
 .alert-error {
     background-color: #f8d7da;
     color: #721c24;
     border: 2px solid #f5c6cb;
 }
 
+/* Animation d'entrée des messages */
 @keyframes slideIn {
     from { transform: translateY(-20px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }

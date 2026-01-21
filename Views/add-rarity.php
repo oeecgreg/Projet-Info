@@ -1,8 +1,10 @@
+<!-- Page pour ajouter une nouvelle rareté -->
 <?php $this->layout('template', ['title' => 'Ajouter une Rareté']) ?>
 
 <div class="form-container">
     <h1>Ajouter une nouvelle Rareté</h1>
 
+    <!-- Formulaire d'ajout de rareté -->
     <form action="index.php?action=add-rarity" method="POST">
         <div class="form-group">
             <label for="name">Nom de la rareté :</label>

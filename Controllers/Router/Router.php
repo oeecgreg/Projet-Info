@@ -13,6 +13,9 @@ use Controllers\Router\Route\RouteEditPerso;
 use Controllers\Router\Route\RouteLogout;
 use Controllers\Router\Route\RouteAddRarity;
 
+/**
+ * Classe de routage principal
+ */
 class Router
 {
     private $routeList = [];
@@ -20,6 +23,11 @@ class Router
     private string $actionKey;
     private $engine; // Nécessaire pour instancier les contrôleurs
 
+    /**
+     * Construit le routeur avec le moteur de template et le nom de la clé d'action
+     * @param mixed $engine Le moteur de template
+     * @param string $name_of_action_key Le nom de la clé d'action dans les requêtes
+     */
     public function __construct($engine, $name_of_action_key = "action")
     {
         $this->engine = $engine;
@@ -32,6 +40,10 @@ class Router
         $this->createRouteList();
     }
 
+    /** 
+     * Crée la liste des contrôleurs
+     * @return void
+     */
     private function createControllerList()
     {
         // On instancie le contrôleurs ici
@@ -40,6 +52,10 @@ class Router
         ];
     }
 
+    /** 
+     * Crée la liste des routes
+     * @return void
+     */
     private function createRouteList()
     {
         $this->routeList = [
@@ -55,6 +71,12 @@ class Router
         ];
     }
 
+    /** 
+     * Effectue le routage en fonction des paramètres GET et POST
+     * @param array $get Paramètres GET de la requête
+     * @param array $post Paramètres POST de la requête
+     * @return void
+     */
     public function routing($get = [], $post = [])
     {
         // Récupération de l'action, sinon 'index' par défaut

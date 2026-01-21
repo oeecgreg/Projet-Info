@@ -6,15 +6,27 @@ use Controllers\MainController;
 use Models\Classe;
 use Models\ClasseDAO;
 
+/**
+ * Route pour l'ajout d'une classe
+ */
 class RouteAddClasse extends Route
 {
     private MainController $controller;
 
+    /**
+     * Constructeur
+     * @param MainController $controller Le contrôleur principal
+     */
     public function __construct(MainController $controller)
     {
         $this->controller = $controller;
     }
 
+    /**
+     * Gère la requête GET pour afficher le formulaire d'ajout de classe
+     * @param array $params Paramètres de la requête
+     * @return void
+     */
     public function get($params = [])
     {
         // Sécurité : vérifier la session
@@ -25,6 +37,11 @@ class RouteAddClasse extends Route
         return $this->controller->displayAddClasse();
     }
 
+    /**
+     * Gère la requête POST pour traiter le formulaire d'ajout de classe
+     * @param array $params Paramètres de la requête
+     * @return void
+     */
     public function post($params = [])
     {
         $name = $params['name'] ?? null;

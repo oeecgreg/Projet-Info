@@ -3,6 +3,9 @@ namespace Models;
 
 use Models\User;
 
+/**
+ * DAO pour la gestion des utilisateurs
+ */
 class UserDAO extends BasePDODAO
 {
     /**

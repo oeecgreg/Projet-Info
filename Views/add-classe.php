@@ -1,8 +1,11 @@
+<!-- Page pour ajouter une nouvelle classe de Brawler -->
 <?php $this->layout('template', ['title' => 'Ajouter une Classe']) ?>
 
+<!-- Contenu principal de la page -->
 <div class="form-container">
     <h1>Ajouter une nouvelle Classe</h1>
     
+    <!-- Formulaire d'ajout de classe -->
     <form action="index.php?action=add-classe" method="POST">
         
         <div class="form-group">
