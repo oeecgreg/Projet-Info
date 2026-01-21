@@ -3,31 +3,39 @@
 namespace Models;
 
 /**
- * Gère les interactions avec la table Personnages en base de données
+ * Gère les interactions avec la table brawler en base de données
  */
 class PersonnageDAO extends BasePDODAO
 {
     /**
-     * Récupère tous les brawlers
-     * @return array Données brutes de la table Brawler
+     * Récupère tous les brawlers avec leur couleur de rareté
+     * @return array Données brutes de la table
      */
     public function getAll(): array
     {
-        // j'ai remplacé Personnage par Brawler
-        $sql = "SELECT id, url_img, name, classe, rarity FROM Brawler";
+        // On utilise des alias (b pour brawler, r pour rarity)
+        // LEFT JOIN permet de garder le brawler même si sa rareté n'existe pas dans la table rarity
+        $sql = "SELECT b.*, r.color_code 
+                FROM brawler b 
+                LEFT JOIN rarity r ON b.rarity = r.name 
+                ORDER BY b.id DESC";
+                
         $stmt = $this->execRequest($sql);
         return $stmt->fetchAll();
     }
 
     /**
-     * Récupère un brawler par son ID
+     * Récupère un brawler par son ID avec sa couleur
      * @param int $id
      * @return array|null
      */
     public function getByID(int $id): ?array
     {
-        // On remplace PERSONNAGE par Brawler
-        $sql = "SELECT id, url_img, name, classe, rarity FROM Brawler WHERE id = ?";
+        $sql = "SELECT b.*, r.color_code 
+                FROM brawler b 
+                LEFT JOIN rarity r ON b.rarity = r.name 
+                WHERE b.id = ?";
+                
         $stmt = $this->execRequest($sql, [$id]);
         $result = $stmt->fetch();
         
@@ -41,10 +49,8 @@ class PersonnageDAO extends BasePDODAO
      */
     public function add(\Models\Personnage $perso): bool
     {
-        // On prépare la requête (pas d'ID car auto-incrément, pas d'element/origin car supprimés)
-        $sql = "INSERT INTO Brawler (name, classe, rarity, url_img) VALUES (:name, :classe, :rarity, :url_img)";
+        $sql = "INSERT INTO brawler (name, classe, rarity, url_img) VALUES (:name, :classe, :rarity, :url_img)";
         
-        // On prépare les valeurs
         $values = [
             'name'    => $perso->getName(),
             'classe'  => $perso->getClasse(),
@@ -52,12 +58,10 @@ class PersonnageDAO extends BasePDODAO
             'url_img' => $perso->getUrlImg()
         ];
 
-        // On exécute via la méthode héritée de BasePDODAO
         try {
             $this->execRequest($sql, $values);
             return true;
         } catch (\Exception $e) {
-            // logs d'erreur peuvent être ajoutés ici
             return false;
         }
     }
@@ -69,7 +73,7 @@ class PersonnageDAO extends BasePDODAO
      */
     public function delete(int $id): bool
     {
-        $sql = "DELETE FROM Brawler WHERE id = ?";
+        $sql = "DELETE FROM brawler WHERE id = ?";
         
         try {
             $this->execRequest($sql, [$id]);
@@ -86,7 +90,7 @@ class PersonnageDAO extends BasePDODAO
      */
     public function update(\Models\Personnage $perso): bool
     {
-        $sql = "UPDATE Brawler SET name = :name, classe = :classe, rarity = :rarity, url_img = :url_img WHERE id = :id";
+        $sql = "UPDATE brawler SET name = :name, classe = :classe, rarity = :rarity, url_img = :url_img WHERE id = :id";
         
         $values = [
             'id'      => $perso->getId(),

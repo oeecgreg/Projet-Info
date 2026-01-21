@@ -49,18 +49,25 @@ class MainController {
     {
         // On récupère les classes depuis la base de données
         $classeDAO = new \Models\ClasseDAO();
+        $rarityDAO = new \Models\RarityDAO();
+
         $listClasses = $classeDAO->getAll();
+        $listRarities = $rarityDAO->getAll();
 
         // On passe la liste à la vue
         echo $this->templates->render('add-perso', [
-            'listClasses' => $listClasses
+            'listClasses' => $listClasses,
+            'listRarities'=> $listRarities
         ]);
     }
-    // C'est cette méthode qui était manquante pour ta page !
+
     public function displayAddClasse()
     {
-        // Assure-toi que le fichier Views/add-classe.php existe bien
         echo $this->templates->render('add-classe', []);
+    }
+
+    public function displayAddRarity() {
+        echo $this->templates->render('add-rarity');
     }
 
     public function displayLogs()
@@ -82,13 +89,18 @@ class MainController {
 
         // AJOUT : On récupère aussi les classes pour le menu déroulant
         $classeDAO = new \Models\ClasseDAO();
+        $rarityDAO = new \Models\RarityDAO();
+
+        
         $listClasses = $classeDAO->getAll();
+        $listRarities = $rarityDAO->getAll();
 
         if ($brawler) {
             // MODIFICATION : On passe 'listClasses' à la vue
             echo $this->templates->render('edit-perso', [
                 'brawler' => $brawler,
-                'listClasses' => $listClasses
+                'listClasses' => $listClasses,
+                'listRarities'=> $listRarities
             ]);
         } else {
             header('Location: index.php');

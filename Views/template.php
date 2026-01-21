@@ -34,6 +34,7 @@ shuffle($images);
                     <?php if(isset($_SESSION['user'])): ?>
                         <li><a href="index.php?action=add-perso">Ajouter un Brawler</a></li>
                         <li><a href="index.php?action=add-classe">Ajouter une Classe</a></li>
+                        <li><a href="index.php?action=add-rarity">Ajouter une Rareté</a></li>
                         <li><a href="index.php?action=logs">Journal (Logs)</a></li>
                     <?php endif; ?>
                     

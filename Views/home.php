@@ -24,9 +24,11 @@
                     <td><?= $this->e($brawler['name']) ?></td>
                     <td><?= $this->e($brawler['classe']) ?></td>
                     <td>
-                        <span class="rarity-badge <?= strtolower($this->e($brawler['rarity'])) ?>">
-                            <?= $this->e($brawler['rarity']) ?>
-                        </span>
+                        <td>
+                            <span class="rarity-badge" style="background-color: <?= $this->e($brawler['color_code']) ?>;">
+                                <?= $this->e($brawler['rarity']) ?>
+                            </span>
+                        </td>
                     </td>
                     <td class="options">
                         <?php if(isset($_SESSION['user'])): ?>

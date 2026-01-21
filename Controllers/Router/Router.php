@@ -11,6 +11,7 @@ use Controllers\Router\Route\RouteLogin;
 use Controllers\Router\Route\RouteDelPerso;
 use Controllers\Router\Route\RouteEditPerso;
 use Controllers\Router\Route\RouteLogout;
+use Controllers\Router\Route\RouteAddRarity;
 
 class Router
 {
@@ -33,10 +34,9 @@ class Router
 
     private function createControllerList()
     {
-        // On instancie les contrôleurs ici
+        // On instancie le contrôleurs ici
         $this->ctrlList = [
             'main' => new MainController($this->engine),
-            // 'perso' => new PersoController($this->engine), // Pour plus tard
         ];
     }
 
@@ -48,6 +48,7 @@ class Router
             'del-perso' => new RouteDelPerso($this->ctrlList['main']),
             'edit-perso' => new RouteEditPerso($this->ctrlList['main']),
             'add-classe' => new RouteAddClasse($this->ctrlList['main']),
+            'add-rarity' => new RouteAddRarity($this->ctrlList['main']),
             'logs' => new RouteLogs($this->ctrlList['main']),
             'login' => new RouteLogin($this->ctrlList['main']),
             'logout' => new RouteLogout(),
@@ -71,7 +72,6 @@ class Router
             }
         } else {
             // Si l'action n'existe pas -> redirection vers index ou page 404
-            // Pour l'instant, on redirige vers l'accueil comme demandé
             $this->routeList['index']->action();
         }
     }

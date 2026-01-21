@@ -28,21 +28,21 @@ class RouteAddPerso extends Route
     // Traite le formulaire (méthode POST)
     public function post($params = [])
     {
-        // 1. Récupération des données du formulaire
+        // Récupération des données du formulaire et vérification que le formulaire est complet
         $name = $params['name'] ?? null;
         $classe = $params['classe'] ?? null;
         $rarity = $params['rarity'] ?? null;
 
-        // 2. Vérification basique
+        // Vérification basique que les champs sont remplis
         if ($name && $classe && $rarity) {
 
-            $perso = new \Models\Personnage();
+            $perso = new Personnage();
             $perso->setName($name);
             $perso->setRarity($rarity);
             $perso->setClasse($classe);
             $perso->setUrlImg("public/img/" . $name . ".png");
 
-            $dao = new \Models\PersonnageDAO();
+            $dao = new PersonnageDAO();
             if ($dao->add($perso)) {
                 // --- DEBUT AJOUT LOG ---
                 $logDAO = new \Models\LogDAO();

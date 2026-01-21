@@ -14,12 +14,10 @@
         <div class="form-group">
             <label for="rarity">Rareté :</label>
             <select id="rarity" name="rarity" required>
-                <?php 
-                $raretes = ["Premier brawler", "Rare", "Super Rare", "Epique", "Mythique", "Légendaire", "Ultra Légendaire"];
-                foreach($raretes as $r): 
-                ?>
-                    <option value="<?= $r ?>" <?= ($brawler['rarity'] == $r) ? 'selected' : '' ?>>
-                        <?= $r ?>
+                <?php foreach($listRarities as $rarity): ?>
+                    <option value="<?= $this->e($rarity['name']) ?>" 
+                        <?= $brawler['rarity'] == $rarity['name'] ? 'selected' : '' ?>>
+                        <?= $this->e($rarity['name']) ?>
                     </option>
                 <?php endforeach; ?>
             </select>
