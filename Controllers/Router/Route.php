@@ -9,6 +9,8 @@ use Exception;
  */
 abstract class Route
 {
+
+    protected bool $isProtected = false;
     /** 
      * Gère les requêtes en fonction de la méthode HTTP
      * @param array $params Paramètres de la requête
@@ -41,6 +43,17 @@ abstract class Route
             return $array[$paramName];
         } else {
             throw new Exception("Paramètre '$paramName' absent");
+        }
+    }
+
+    /**
+     * Vérifie si l'utilisateur a le droit d'accéder à la route
+     * @throws \Exception Si accès refusé
+     */
+    public function protectRoute(): void
+    {
+        if ($this->isProtected && !isset($_SESSION['user'])) {
+            throw new \Exception("Accès refusé");
         }
     }
 

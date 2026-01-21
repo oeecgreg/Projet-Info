@@ -78,7 +78,7 @@ body {
    ==================================== */
 header {
     background-color: #161616; /* Noir transparent */
-    padding: 15px 0;
+    padding: 30px 0;
     text-align: center;
     border-bottom: 3px solid var(--primary);
     box-shadow: 0 4px 15px rgba(0,0,0,0.5);
@@ -106,6 +106,20 @@ nav a {
 nav a:hover {
     color: var(--primary);
     text-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
+}
+
+footer {
+    background-color: #161616;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 15px 0;
+    border-top: 3px solid var(--primary);
+    margin-top: 40px;
+    font-size: 0.9em;
+}
+
+.rickroll {
+    display: none;
 }
 
 /* ====================================

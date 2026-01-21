@@ -2,7 +2,7 @@
 <?php $this->layout('template', ['title' => 'Connexion']) ?>
 
 <div class="form-container">
-    <h1>Connexion Admin</h1>
+    <h1>Connexion</h1>
 
     <?php if(isset($error)): ?>
         <p style="color: #fe3636; text-align: center; font-weight: bold;"><?= $this->e($error) ?></p>

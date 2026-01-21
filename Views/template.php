@@ -38,7 +38,9 @@ shuffle($images);
                         <li><a href="index.php?action=add-rarity">Ajouter une Rareté</a></li>
                         <li><a href="index.php?action=logs">Journal (Logs)</a></li>
                     <?php endif; ?>
-                    
+                    <?php if(isset($_SESSION['user'])): ?>
+                        <li><a href="index.php?action=my-collection">Ma Collection</a></li> <li><a href="index.php?action=add-perso">Ajouter un Brawler</a></li>
+                    <?php endif; ?>
                     <?php if(!isset($_SESSION['user'])): ?>
                         <li><a href="index.php?action=login">Connexion</a></li>
                     <?php else: ?>
@@ -53,6 +55,9 @@ shuffle($images);
             <?=$this->section('content')?>
         </main>
         <footer>
+            <p>&copy; <?= date('Y') ?> <a id="rickroll" href="Views/essentials/rr.html" target="_blank">Luca le goat</a>. Tous droits réservés (sinon je vous envoie mes avocats).</p>
+            <p>Images de Brawl Stars &copy;Supercell. Utilisées à des fins éducatives uniquement.</p>
+            
         </footer>
 
         <!-- Script pour la recherche et le tri dans la table des Brawlers -->

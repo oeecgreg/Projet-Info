@@ -11,6 +11,8 @@ use Models\PersonnageDAO;
  */
 class RouteAddPerso extends Route
 {
+    protected bool $isProtected = true;
+
     private MainController $controller;
 
     /**
@@ -30,16 +32,13 @@ class RouteAddPerso extends Route
      */
     public function get($params = [])
     {
-        if(!isset($_SESSION["user"])) {
-            header('Location: index.php?action=login');
-            exit;
-        }
         return $this->controller->displayAddPerso();
     }
 
     /**
      * Traite le formulaire
      * @param mixed $params
+     * @return void
      */
     public function post($params = [])
     {

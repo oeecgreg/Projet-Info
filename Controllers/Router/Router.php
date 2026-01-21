@@ -12,6 +12,8 @@ use Controllers\Router\Route\RouteDelPerso;
 use Controllers\Router\Route\RouteEditPerso;
 use Controllers\Router\Route\RouteLogout;
 use Controllers\Router\Route\RouteAddRarity;
+use Controllers\Router\Route\RouteCollection;
+use Controllers\Router\Route\RouteMyCollection;
 
 /**
  * Classe de routage principal
@@ -67,6 +69,8 @@ class Router
             'add-rarity' => new RouteAddRarity($this->ctrlList['main']),
             'logs' => new RouteLogs($this->ctrlList['main']),
             'login' => new RouteLogin($this->ctrlList['main']),
+            'my-collection' => new RouteMyCollection($this->ctrlList['main']),
+            'collection' => new RouteCollection($this->ctrlList['main']),
             'logout' => new RouteLogout(),
         ];
     }
@@ -77,24 +81,35 @@ class Router
      * @param array $post Paramètres POST de la requête
      * @return void
      */
-    public function routing($get = [], $post = [])
+    public function routing($get, $post)
     {
-        // Récupération de l'action, sinon 'index' par défaut
-        $action = $get[$this->actionKey] ?? 'index';
+        $action = $get['action'] ?? 'index';
 
-        // Vérifie si la route existe
-        if (isset($this->routeList[$action])) {
-            $route = $this->routeList[$action];
-            
-            // Si on a des données POST, on appelle post(), sinon get()
-            if (!empty($post)) {
-                $route->action($post, 'POST');
+        try {
+            if (isset($this->routeList[$action])) {
+                $route = $this->routeList[$action];
+
+                // Sécurité : protection de la route si nécessaire
+                $route->protectRoute();
+
+                // Détermination de la méthode HTTP
+                $method = $_SERVER['REQUEST_METHOD'];
+                
+                if ($method === 'POST') {
+                    $route->action($post, 'POST'); // On envoie les données du formulaire
+                } else {
+                    $route->action($get, 'GET');   // On envoie les paramètres de l'URL (id, mode...)
+                }
+
             } else {
-                $route->action($get, 'GET');
+                header('Location: index.php');
+                exit;
             }
-        } else {
-            // Si l'action n'existe pas -> redirection vers index ou page 404
-            $this->routeList['index']->action();
+        } catch (\Exception $e) {
+            $_SESSION['flash_message'] = "Vous devez être connecté pour accéder à cette page.";
+            $_SESSION['flash_type'] = "error";
+            header('Location: index.php?action=login');
+            exit;
         }
     }
 }

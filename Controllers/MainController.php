@@ -21,23 +21,30 @@ class MainController {
      * Affiche la page d'accueil avec la liste des brawlers
      * @return void
      */
-    public function index() : void {
-
-        // Récupération du message flash s'il existe
+    public function index()
+    {
+        //Gestion des messages flash
         $msg = $_SESSION['flash_message'] ?? null;
         $type = $_SESSION['flash_type'] ?? 'info';
+        unset($_SESSION['flash_message'], $_SESSION['flash_type']);
 
-        // IMPORTANT !! : On supprime le message de la session pour qu'il ne s'affiche qu'une fois
-        unset($_SESSION['flash_message']);
-        unset($_SESSION['flash_type']);
+        $dao = new PersonnageDAO();
+        $brawlers = $dao->getAll();
 
-        $personnageDAO = new PersonnageDAO();
-        $listPersonnage = $personnageDAO->getAll();
+        // Récupération de la collection de l'utilisateur connecté
+        // -----------------------------------------------
+        $myCollection = [];
+        if (isset($_SESSION['user'])) {
+            $collDAO = new \Models\CollectionDAO();
+            $myCollection = $collDAO->getBrawlerIdsByUser($_SESSION['user']['id']);
+        }
+        // -----------------------------------------------
 
         echo $this->templates->render('home', [
-            'listPersonnage' => $listPersonnage,
-            'flash_message' => $msg, // On envoie le message à la view direct
-            'flash_type' => $type
+            'brawlers' => $brawlers,
+            'flash_message' => $msg,
+            'flash_type' => $type,
+            'myCollection' => $myCollection // On envoie la liste à la vue
         ]);
     }
 
@@ -154,5 +161,22 @@ class MainController {
             header('Location: index.php');
             exit;
         }
+    }
+
+    /**
+     * Affiche la collection de l'utilisateur connecté
+     * @return void
+     */
+    public function displayMyCollection()
+    {
+        // On récupère l'ID de l'utilisateur connecté (le Routeur a déjà vérifié la connexion)
+        $userId = $_SESSION['user']['id'];
+
+        $collDAO = new \Models\CollectionDAO();
+        $myBrawlers = $collDAO->getBrawlersByUser($userId);
+
+        echo $this->templates->render('my-collection', [
+            'brawlers' => $myBrawlers
+        ]);
     }
 }
