@@ -115,3 +115,9 @@ Le code vérifie spécifiquement le pseudo `admin` pour débloquer les menus de 
 /Vendor          -> Librairies externes
 index.php        -> Point d'entrée
 ```
+
+<br>
+<br>
+<center>
+    <small><i>NB : ne surtout pas cliquer le lien dans le footer !! 🤫</i></small>
+</center>

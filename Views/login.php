@@ -4,6 +4,12 @@
 <div class="form-container">
     <h1>Connexion</h1>
 
+    <?php if(isset($flash_message) && $flash_message): ?>
+        <div class="alert alert-<?= $flash_type ?>">
+            <?= $flash_message ?>
+        </div>
+    <?php endif; ?>
+    
     <?php if(isset($error)): ?>
         <p style="color: #fe3636; text-align: center; font-weight: bold;"><?= $this->e($error) ?></p>
     <?php endif; ?>

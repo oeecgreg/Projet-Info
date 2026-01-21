@@ -129,9 +129,16 @@ class MainController {
      */
     public function displayLogin()
     {
-        echo $this->templates->render('login', []);
-    }
+        $msg = $_SESSION['flash_message'] ?? null;
+        $type = $_SESSION['flash_type'] ?? 'info';
 
+        unset($_SESSION['flash_message'], $_SESSION['flash_type']);
+
+        echo $this->templates->render('login', [
+            'flash_message' => $msg,
+            'flash_type' => $type
+        ]);
+    }
     /**
      * Affiche le formulaire d'édition d'un brawler
      * @param int $id L'ID du brawler à éditer
