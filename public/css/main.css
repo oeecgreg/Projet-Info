@@ -153,6 +153,13 @@ h1 {
     text-shadow: 2px 2px 0px #000;
 }
 
+h2 {
+    color: var(--primary);
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
 /* ====================================
    5. TABLEAU DES BRAWLERS/PERSONNAGES
    ==================================== */
@@ -227,8 +234,6 @@ h1 {
 }
 
 /* Classes générées par PHP (strtolower) : "premier brawler", "super rare", etc. */
-/* Le sélecteur .class1.class2 cible un élément qui a les deux classes */
-
 .rarity-badge.rare { 
     background-color: var(--rare-green); 
     color: #004d1a;
@@ -398,4 +403,112 @@ small {
 @keyframes slideIn {
     from { transform: translateY(-20px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
+}
+
+/* ====================================
+   12. NOUVEAU LAYOUT ADMIN (Split View)
+   ==================================== */
+
+/* Le conteneur qui met les éléments côte à côte */
+.admin-layout-split {
+    display: flex; /* Active Flexbox */
+    flex-direction: row; /* Alignement horizontal */
+    gap: 30px; /* Espace entre les deux blocs */
+    align-items: flex-start; /* Aligne les blocs vers le haut */
+    max-width: 1200px; /* Largeur maximale globale */
+    margin: 0 auto 50px auto; /* Centrer sur la page */
+    padding: 0 20px;
+}
+
+/* Configuration des deux enfants (Tableau et Formulaire) */
+.admin-layout-split .table-container,
+.admin-layout-split .form-container {
+    flex: 1; /* Les deux prennent chacun 50% de l'espace disponible */
+    background-color: var(--bg-card); /* Fond sombre */
+    color: var(--text-main);
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid #333;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Même ombre que les formulaires */
+    
+    /* On retire les marges automatiques des anciens styles si elles existent */
+    margin: 0 !important; 
+}
+
+/* Style utilitaire pour l'ombre */
+.box-shadow {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* --- STYLE DU TABLEAU ADMIN --- */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.admin-table thead tr {
+    border-bottom: 2px solid var(--primary);
+    color: var(--primary);
+    text-align: center;
+}
+
+.admin-table th, 
+.admin-table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #333; /* Bordure sombre */
+    color: var(--text-main);
+}
+
+/* Survol des lignes du tableau */
+.admin-table tbody tr:hover {
+    background-color: #2a2f42; /* Légèrement plus clair */
+}
+
+.class-icon-mini {
+    width: 35px; 
+    height: 35px; 
+    object-fit: contain; 
+    vertical-align: middle;
+    background: rgba(255, 255, 255, 0.05); /* Fond très léger pour faire ressortir l'icone */
+    border-radius: 4px;
+    padding: 4px;
+}
+
+.fw-bold { font-weight: bold; color: var(--text-main); }
+
+/* Petit bouton supprimer */
+.btn-delete-mini {
+    color: #ff6b6b;
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding: 6px 12px;
+    border: 1px solid #ff6b6b;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+.btn-delete-mini:hover {
+    background-color: #ff6b6b;
+    color: white;
+    box-shadow: 0 0 10px rgba(255, 107, 107, 0.4);
+}
+
+
+/* --- RESPONSIVE (Pour tablettes et mobiles) --- */
+/* Si l'écran est plus petit que 900px, on remet en colonne */
+@media (max-width: 900px) {
+    .admin-layout-split {
+        flex-direction: column; /* Empile les éléments verticalement */
+        gap: 40px;
+    }
+    
+    /* Sur mobile, le tableau passe en DESSOUS du formulaire */
+    /* On utilise 'order' pour changer l'ordre visuel sans changer le HTML */
+    .admin-layout-split .table-container {
+        order: 2; 
+    }
+    .admin-layout-split .form-container {
+        order: 1;
+    }
 }

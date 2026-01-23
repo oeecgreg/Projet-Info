@@ -33,6 +33,12 @@ class RouteMyCollection extends Route
      */
     public function get($params = [])
     {
+        if (!isset($_SESSION['user'])) {
+            $_SESSION['flash_message'] = "Accès refusé. Vous devez être connecté.";
+            $_SESSION['flash_type'] = "error";
+            header('Location: index.php?action=login'); // Redirection vers le login
+            exit;
+        }
         return $this->controller->displayMyCollection();
     }
 

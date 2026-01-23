@@ -95,21 +95,17 @@ class MainController {
         ]);
     }
 
-    /**
-     * Render l'ajout de classe
-     * @return void
-     */
-    public function displayAddClasse()
+
+    public function displayAddClasse(array $classes = [])
     {
-        echo $this->templates->render('add-classe', []);
+        // On passe la variable 'classes' à la vue
+        echo $this->templates->render('add-classe', ['classes' => $classes]);
     }
 
-    /**
-     * Render l'ajout de rareté
-     * @return void
-     */
-    public function displayAddRarity() {
-        echo $this->templates->render('add-rarity');
+
+    public function displayAddRarity(array $rarities = [])
+    {
+        echo $this->templates->render('add-rarity', ['rarities' => $rarities]);
     }
 
     /**

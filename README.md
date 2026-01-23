@@ -80,7 +80,7 @@ CREATE TABLE `collection` (
   FOREIGN KEY (`brawler_id`) REFERENCES `brawler`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 6. Table des Log (Liée au pseudo de l'utilisateur)
+-- 6. Table des Log
 CREATE TABLE `log` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `action_type` VARCHAR(50) NOT NULL,
@@ -102,7 +102,7 @@ INSERT INTO `rarity` (`name`, `color_code`) VALUES
 ('Mythique', '#fe5e72'), 
 ('Légendaire', '#fff11e');
 
--- 2. Ajouter les classes (L'image par défaut sera mise automatiquement)
+-- 2. Ajouter les classes
 INSERT INTO `classe` (`name`) VALUES ('Dégâts'), ('Tank'), ('Tireur d''élite'), ('Soutien'), ('Contrôleur'), ('Assassin'), ('Artillerie');
 
 -- 3. Mettre à jour les images des classes (Optionnel mais conseillé pour avoir un projet propre)

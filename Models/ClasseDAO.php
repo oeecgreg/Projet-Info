@@ -32,4 +32,15 @@ class ClasseDAO extends BasePDODAO
             return false;
         }
     }
+
+    public function delete(int $id): bool
+    {
+        $sql = "DELETE FROM classe WHERE id = ?";
+        try {
+            $this->execRequest($sql, [$id]);
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }

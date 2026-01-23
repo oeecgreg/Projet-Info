@@ -40,7 +40,12 @@ class RouteAddClasse extends Route
             exit;
         }
         // ----------------------
-        return $this->controller->displayAddClasse();
+        // Récupération de la liste
+        $dao = new ClasseDAO();
+        $classes = $dao->getAll(); // Assure-toi que findAll existe dans ClasseDAO (hérité ou créé)
+
+        // Appel du contrôleur avec les données
+        return $this->controller->displayAddClasse($classes);
     }
 
     /**

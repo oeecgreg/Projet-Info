@@ -25,4 +25,15 @@ class RarityDAO extends BasePDODAO {
         $sql = "INSERT INTO Rarity (name, color_code) VALUES (?, ?)";
         $this->execRequest($sql, [$rarity->getName(), $rarity->getColorCode()]);
     }
+
+    public function delete(int $id): bool
+    {
+        $sql = "DELETE FROM rarity WHERE id = ?";
+        try {
+            $this->execRequest($sql, [$id]);
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }

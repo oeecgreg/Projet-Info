@@ -15,6 +15,8 @@ use Controllers\Router\Route\RouteAddRarity;
 use Controllers\Router\Route\RouteCollection;
 use Controllers\Router\Route\RouteMyCollection;
 use Controllers\Router\Route\RouteRegister;
+use Controllers\Router\Route\RouteDelClasse;
+use Controllers\Router\Route\RouteDelRarity;
 
 /**
  * Classe de routage principal
@@ -73,6 +75,8 @@ class Router
             'my-collection' => new RouteMyCollection($this->ctrlList['main']),
             'collection' => new RouteCollection($this->ctrlList['main']),
             'register' => new RouteRegister($this->ctrlList['main']),
+            'del-classe' => new RouteDelClasse(),
+            'del-rarity' => new RouteDelRarity(),
             'logout' => new RouteLogout(),
         ];
     }

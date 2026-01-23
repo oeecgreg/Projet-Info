@@ -38,7 +38,11 @@ class RouteAddRarity extends Route {
             exit;
         }
         // ----------------------
-        return $this->controller->displayAddRarity();
+        $dao = new RarityDAO();
+        $rarities = $dao->getAll(); // Assure-toi que findAll existe dans RarityDAO (hérité ou créé)
+
+        // Appel du contrôleur avec les données
+        return $this->controller->displayAddRarity($rarities);
     }
 
     /**
