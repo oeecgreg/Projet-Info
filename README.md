@@ -28,66 +28,72 @@ Application Web développée en PHP (Architecture MVC) permettant de gérer une 
 
 ```ini
 [DB]
-dsn = 'mysql:host=localhost;dbname=projet_info;charset=utf8'
+dsn = 'mysql:host=localhost;dbname=bs;charset=utf8'
 user = 'root'
 pass = ''
 ```
 3. **Créer la base de données** avec le code suivant :
 ```ini
+
+CREATE DATABASE IF NOT EXISTS bs
+    DEFAULT CHARACTER SET utf8mb4
+    COLLATE utf8mb4_0900_ai_ci;
+USE bs;
+
 -- 1. Table des Utilisateurs
 CREATE TABLE `users` (
-  `id` VARCHAR(50) NOT NULL,
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
   `username` VARCHAR(50) NOT NULL,
-  `hash_pwd` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`id`)
+  `password` VARCHAR(255) NOT NULL,
+  UNIQUE KEY `uk_username` (`username`) -- INDISPENSABLE pour la Foreign Key des logs
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 2. Table des Raretés (Couleurs)
+-- 2. Table des Raretés
 CREATE TABLE `rarity` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(50) NOT NULL,
   `color_code` VARCHAR(20) DEFAULT '#FFFFFF'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 3. Table des Classes (Types)
+-- 3. Table des Classes
 CREATE TABLE `classe` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `name` VARCHAR(50) NOT NULL
+  `name` VARCHAR(50) NOT NULL,
+  `url_img` VARCHAR(255) DEFAULT 'public/img/default.png' -- DEFAULT évite le crash des INSERT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 4. Table des Brawlers
 CREATE TABLE `brawler` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `url_img` VARCHAR(250) DEFAULT 'public/img/unknown.png',
   `name` VARCHAR(50) NOT NULL,
-  `rarity` VARCHAR(50) NOT NULL,
   `classe` VARCHAR(50) NOT NULL,
-  `url_img` VARCHAR(255) DEFAULT 'public/img/unknown.png'
+  `rarity` VARCHAR(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 5. Table de Collection (Liaison User <-> Brawler)
+-- 5. Table de Collection
 CREATE TABLE `collection` (
-  `user_id` VARCHAR(50) NOT NULL,
+  `user_id` INT NOT NULL,
   `brawler_id` INT NOT NULL,
   PRIMARY KEY (`user_id`, `brawler_id`),
   FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
   FOREIGN KEY (`brawler_id`) REFERENCES `brawler`(`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 6. Table des Logs
-CREATE TABLE `logs` (
+-- 6. Table des Log (Liée au pseudo de l'utilisateur)
+CREATE TABLE `log` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `type` VARCHAR(20) NOT NULL,
-  `action` TEXT NOT NULL,
-  `user` VARCHAR(50) NOT NULL,
-  `date_action` DATETIME DEFAULT CURRENT_TIMESTAMP
+  `action_type` VARCHAR(50) NOT NULL,
+  `description` TEXT NOT NULL,
+  `author` VARCHAR(50) NOT NULL,
+  `date_action` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (`author`) REFERENCES `users`(`username`) 
+  ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- DONNÉES DE DÉPART (Optionnel) --
+-- DONNÉES DE DÉPART --
 
--- Ajouter les classes de base
-INSERT INTO `classe` (`name`) VALUES ('Dégâts'), ('Tank'), ('Tireur d''élite'), ('Soutien'), ('Contrôleur'), ('Assassin'), ('Artillerie');
-
--- Ajouter les raretés de base
+-- 1. Ajouter les raretés
 INSERT INTO `rarity` (`name`, `color_code`) VALUES 
 ('Commun', '#b9e8ff'), 
 ('Rare', '#68fd58'), 
@@ -95,6 +101,18 @@ INSERT INTO `rarity` (`name`, `color_code`) VALUES
 ('Épique', '#d850ff'), 
 ('Mythique', '#fe5e72'), 
 ('Légendaire', '#fff11e');
+
+-- 2. Ajouter les classes (L'image par défaut sera mise automatiquement)
+INSERT INTO `classe` (`name`) VALUES ('Dégâts'), ('Tank'), ('Tireur d''élite'), ('Soutien'), ('Contrôleur'), ('Assassin'), ('Artillerie');
+
+-- 3. Mettre à jour les images des classes (Optionnel mais conseillé pour avoir un projet propre)
+UPDATE `classe` SET `url_img` = 'public/img/degat_icon.png' WHERE `name` = 'Dégâts';
+UPDATE `classe` SET `url_img` = 'public/img/tank_icon.png' WHERE `name` = 'Tank';
+UPDATE `classe` SET `url_img` = 'public/img/tireur_icon.png' WHERE `name` = 'Tireur d''élite';
+UPDATE `classe` SET `url_img` = 'public/img/support_icon.png' WHERE `name` = 'Soutien';
+UPDATE `classe` SET `url_img` = 'public/img/controleur_icon.png' WHERE `name` = 'Contrôleur';
+UPDATE `classe` SET `url_img` = 'public/img/assassin_icon.png' WHERE `name` = 'Assassin';
+UPDATE `classe` SET `url_img` = 'public/img/lanceur_icon.png' WHERE `name` = 'Artillerie';
 ```
 
 ## 🔑 Compte Administrateur

@@ -13,15 +13,35 @@ class PersonnageDAO extends BasePDODAO
      */
     public function getAll(): array
     {
-        // On utilise des alias (b pour brawler, r pour rarity)
-        // LEFT JOIN permet de garder le brawler même si sa rareté n'existe pas dans la table rarity
-        $sql = "SELECT b.*, r.color_code 
-                FROM brawler b 
-                LEFT JOIN rarity r ON b.rarity = r.name 
-                ORDER BY b.id DESC";
+        $sql = "SELECT b.*, 
+                       r.color_code, 
+                       c.url_img AS class_img 
+                FROM brawler b
+                LEFT JOIN rarity r ON b.rarity = r.name
+                LEFT JOIN classe c ON b.classe = c.name
+                ORDER BY b.name";
                 
         $stmt = $this->execRequest($sql);
-        return $stmt->fetchAll();
+        $brawlers = $stmt->fetchAll();
+
+        // On définit la racine du projet (le dossier parent de 'Models')
+        $rootPath = dirname(__DIR__); 
+
+        foreach ($brawlers as &$brawler) {
+            
+            // On construit le chemin système complet (ex: C:\wamp64\www\...\public\img\tank.png)
+            // On s'assure qu'il n'y a pas de slash en trop au début de l'URL stockée en base
+            $relativePath = ltrim($brawler['class_img'] ?? '', '/');
+            $fullPath = $rootPath . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $relativePath);
+
+            // On vérifie si le fichier existe sur le DISQUE (normalement dans public/img/)
+            if (empty($relativePath) || !file_exists($fullPath)) {
+                // Si introuvable, on met l'image par défaut
+                $brawler['class_img'] = 'public/img/default.png';
+            }
+        }
+
+        return $brawlers;
     }
 
     /**
@@ -92,6 +112,17 @@ class PersonnageDAO extends BasePDODAO
     {
         $sql = "UPDATE brawler SET name = :name, classe = :classe, rarity = :rarity, url_img = :url_img WHERE id = :id";
         
+        // Vérification de l'existence de l'image
+        $targetFile = "public/img/" . $perso->getName() . ".png";
+
+        // Si l'image existe, on utilise cette URL
+        if (file_exists($targetFile)) {
+            $perso->setUrlImg($targetFile);
+        } else {
+            // Sinon, on met l'image par défaut
+            $perso->setUrlImg("public/img/unknown.png");
+        }
+
         $values = [
             'id'      => $perso->getId(),
             'name'    => $perso->getName(),

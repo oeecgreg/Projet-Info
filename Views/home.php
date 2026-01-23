@@ -42,7 +42,13 @@
                         <?= $this->e($brawler['rarity']) ?>
                     </span>
                 </td>
-                <td><?= $this->e($brawler['classe']) ?></td>
+                <td>
+                    <img src="<?= $this->e($brawler['class_img']) ?>" 
+                        alt="Icone" 
+                        style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;">
+                        
+                    <?= $this->e($brawler['classe']) ?>
+                </td>
                 
                 <?php if(isset($_SESSION['user'])): ?>
                     <td style="text-align: center;">

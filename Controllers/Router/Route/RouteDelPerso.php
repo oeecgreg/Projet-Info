@@ -31,8 +31,8 @@ class RouteDelPerso extends Route
         $id = $params['id'] ?? null;
 
         // --- SÉCURITÉ ADMIN ---
-        // Si l'utilisateur n'est pas "admin", on refuse son accès 
-        if ($_SESSION['user']['username'] !== 'admin') {
+        // Si l'utilisateur n'est pas "admin", on refuse son accès. On refuse également l'accès si l'utilisateur n'est pas connecté.
+        if (!isset($_SESSION['user']) || $_SESSION['user']['username'] !== 'admin') {
             $_SESSION['flash_message'] = "Accès refusé : Réservé à l'administrateur.";
             $_SESSION['flash_type'] = "error";
             header('Location: index.php');

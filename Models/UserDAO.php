@@ -45,6 +45,9 @@ class UserDAO extends BasePDODAO
 
     /**
      * Crée un nouvel utilisateur
+     * @param string $username
+     * @param string $hash_psw
+     * @return bool (TRUE si succès, FALSE si échec)
      */
     public function add(string $username, string $hash_psw): bool
     {
