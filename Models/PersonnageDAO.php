@@ -69,17 +69,23 @@ class PersonnageDAO extends BasePDODAO
      */
     public function add(Personnage $perso): bool
     {
-        $sql = "INSERT INTO brawler (name, classe, rarity, url_img) VALUES (:name, :classe, :rarity, :url_img)";
+        // 1. VÉRIFICATION DOUBLON
+        $sqlCheck = "SELECT COUNT(*) FROM brawler WHERE name = ?";
+        $stmt = $this->execRequest($sqlCheck, [$perso->getName()]);
         
-        $values = [
-            'name'    => $perso->getName(),
-            'classe'  => $perso->getClasse(),
-            'rarity'  => $perso->getRarity(),
-            'url_img' => $perso->getUrlImg()
-        ];
+        if ($stmt->fetchColumn() > 0) {
+            return false;
+        }
 
+        // 2. INSERTION NORMALE
+        $sql = "INSERT INTO brawler (name, classe, rarity, url_img) VALUES (?, ?, ?, ?)";
         try {
-            $this->execRequest($sql, $values);
+            $this->execRequest($sql, [
+                $perso->getName(), 
+                $perso->getClasse(), 
+                $perso->getRarity(), 
+                $perso->getUrlImg()
+            ]);
             return true;
         } catch (\Exception $e) {
             return false;

@@ -12,7 +12,6 @@ shuffle($images);
         <title><?= $this->e($title) ?></title>
     </head>
     <body>
-        
         <div class="background-animation">
             <div class="img-grid">
                 <?php 
@@ -52,6 +51,18 @@ shuffle($images);
 
         <!-- Contenu principal de la page -->
         <main id="contenu">
+            <?php if (isset($_SESSION['flash_message'])): ?>
+                <div class="container" style="padding-bottom: 0;">
+                    <div class="alert alert-<?= $_SESSION['flash_type'] ?? 'info' ?>">
+                        <?= $_SESSION['flash_message'] ?>
+                    </div>
+                </div>
+                <?php 
+                // Important : On supprime le message pour qu'il ne réapparaisse pas au prochain chargement
+                unset($_SESSION['flash_message']);
+                unset($_SESSION['flash_type']);
+                ?>
+            <?php endif; ?>
             <?=$this->section('content')?>
         </main>
         <footer>

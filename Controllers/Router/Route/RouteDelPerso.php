@@ -72,6 +72,7 @@ class RouteDelPerso extends Route
     /**
      * Pas de requête POST pour cette route
      * @param mixed $params
+     * @return void
      */
     public function post($params = [])
     {

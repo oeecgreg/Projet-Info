@@ -4,12 +4,6 @@
 <div class="container">
     <h1 class="h1">Liste des Brawlers</h1>
 
-    <!-- Affichage des messages flash -->
-    <?php if(isset($flash_message) && $flash_message): ?>
-        <div class="alert alert-<?= $flash_type ?>">
-            <?= $flash_message ?> </div>
-    <?php endif; ?>
-
     <!-- Barre de recherche -->
     <div class="search-container">
         <input type="text" id="searchInput" placeholder="Rechercher un Brawler (nom, rareté ou classe)...">
@@ -17,7 +11,7 @@
     <table class="brawler-table">
     <thead>
         <tr>
-            <th>Image</th>
+            <th>Brawler</th>
             <th>Nom</th>
             <th>Rareté</th>
             <th>Classe</th>
@@ -43,9 +37,7 @@
                     </span>
                 </td>
                 <td>
-                    <img src="<?= $this->e($brawler['class_img']) ?>" 
-                        alt="Icone" 
-                        style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;">
+                    <img src="<?= $this->e($brawler['class_img']) ?>" alt="Icone" class="class_img">
                         
                     <?= $this->e($brawler['classe']) ?>
                 </td>
@@ -54,10 +46,10 @@
                     <td style="text-align: center;">
                         <?php if(in_array($brawler['id'], $myCollection)): ?>
                             <a href="index.php?action=collection&id=<?= $brawler['id'] ?>&mode=remove" 
-                               class="btn-collection remove" title="Retirer">✅</a>
+                               class="btn-collection remove" title="Retirer">-</a>
                         <?php else: ?>
                             <a href="index.php?action=collection&id=<?= $brawler['id'] ?>&mode=add" 
-                               class="btn-collection add" title="Ajouter">➕</a>
+                               class="btn-collection add" title="Ajouter">+</a>
                         <?php endif; ?>
                     </td>
 

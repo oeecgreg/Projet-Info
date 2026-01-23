@@ -1,3 +1,4 @@
+<!-- Page pour ajouter une nouvelle rareté ou supprimer une rareté existante et afficher les raretés existantes -->
 <?php $this->layout('template', ['title' => 'Ajouter une Rareté']) ?>
 
 <h1 style="text-align: center; margin-bottom: 30px;">Gestion des Raretés</h1>
@@ -44,7 +45,7 @@
                                 <a href="index.php?action=del-rarity&id=<?= $rarity['id'] ?>" 
                                    class="btn-delete-mini"
                                    onclick="return confirm('⚠️ Attention !\n\nSupprimer cette rareté peut affecter l\'affichage des Brawlers qui l\'utilisent.\n\nÊtes-vous sûr ?')">
-                                    🗑️ Supprimer
+                                    Supprimer
                                 </a>
                             </td>
                         </tr>

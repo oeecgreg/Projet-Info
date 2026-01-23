@@ -1,6 +1,9 @@
 <?php
 namespace Models;
 
+/**
+ * DAO pour la gestion de la collection des utilisateurs
+ */
 class CollectionDAO extends BasePDODAO
 {
     /**
@@ -57,12 +60,18 @@ class CollectionDAO extends BasePDODAO
     public function getBrawlersByUser(int $userId): array
     {
         // On joint Brawler + Collection + Rarity
-        $sql = "SELECT b.*, r.color_code 
-                FROM brawler b
-                JOIN Collection c ON b.id = c.brawler_id
+        // On ajoute le JOIN sur la table 'classe' (alias c) 
+        // et on récupère 'c.url_img' sous le nom 'class_img'
+        $sql = "SELECT b.*, 
+                       r.color_code,
+                       c.url_img AS class_img 
+                FROM collection col
+                JOIN brawler b ON col.brawler_id = b.id
                 LEFT JOIN rarity r ON b.rarity = r.name
-                WHERE c.user_id = ?";
-                
+                LEFT JOIN classe c ON b.classe = c.name
+                WHERE col.user_id = ?
+                ORDER BY r.id DESC, b.name ASC"; // Tri par rareté puis nom (optionnel)
+
         $stmt = $this->execRequest($sql, [$userId]);
         return $stmt->fetchAll();
     }

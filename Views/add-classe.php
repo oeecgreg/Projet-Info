@@ -1,3 +1,4 @@
+<!-- Page pour ajouter une nouvelle classe ou supprimer une classe existante et afficher les classes existantes -->
 <?php $this->layout('template', ['title' => 'Ajouter une Classe']) ?>
 
 <h1 style="text-align: center; margin-bottom: 30px;">Gestion des Classes</h1>
@@ -24,15 +25,24 @@
                             </td>
                             <td>
                                 <?php 
-                                    $imgSrc = !empty($classe['url_img']) ? $classe['url_img'] : 'public/img/default.png';
+                                    $imagePath = $classe['url_img'] ?? '';
+
+                                    if (empty($imagePath) || !file_exists($imagePath)) {
+                                        $finalImg = 'public/img/default.png';
+                                    } else {
+                                        $finalImg = $imagePath;
+                                    }
                                 ?>
-                                <img src="<?= $this->e($imgSrc) ?>" alt="Icone" class="class-icon-mini">
+                                
+                                <img src="<?= $this->e($finalImg) ?>" 
+                                    alt="Icone" 
+                                    class="class-icon-mini">
                             </td>
                             <td>
                                 <a href="index.php?action=del-classe&id=<?= $classe['id'] ?>" 
                                    class="btn-delete-mini"
-                                   onclick="return confirm('⚠️ Êtes-vous sûr de vouloir supprimer cette classe ?')">
-                                    🗑️ Supprimer
+                                   onclick="return confirm('⚠️ Attention !\n\nSupprimer cette classe peut affecter l\'affichage des Brawlers qui l\'utilisent.\n\nÊtes-vous sûr ?')">
+                                    Supprimer
                                 </a>
                             </td>
                         </tr>

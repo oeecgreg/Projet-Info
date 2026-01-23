@@ -51,22 +51,22 @@ CREATE TABLE `users` (
 -- 2. Table des Raretés
 CREATE TABLE `rarity` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `name` VARCHAR(50) NOT NULL,
+  `name` VARCHAR(50) NOT NULL UNIQUE, -- Ajout de UNIQUE pour éviter les doublons
   `color_code` VARCHAR(20) DEFAULT '#FFFFFF'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 3. Table des Classes
 CREATE TABLE `classe` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `name` VARCHAR(50) NOT NULL,
-  `url_img` VARCHAR(255) DEFAULT 'public/img/default.png' -- DEFAULT évite le crash des INSERT
+  `name` VARCHAR(50) NOT NULL UNIQUE, -- Ajout de UNIQUE pour éviter les doublons
+  `url_img` VARCHAR(255) DEFAULT 'public/img/default.png'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- 4. Table des Brawlers
 CREATE TABLE `brawler` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `url_img` VARCHAR(250) DEFAULT 'public/img/unknown.png',
-  `name` VARCHAR(50) NOT NULL,
+  `name` VARCHAR(50) NOT NULL UNIQUE, -- Ajout de UNIQUE pour éviter les doublons
   `classe` VARCHAR(50) NOT NULL,
   `rarity` VARCHAR(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -105,7 +105,7 @@ INSERT INTO `rarity` (`name`, `color_code`) VALUES
 -- 2. Ajouter les classes
 INSERT INTO `classe` (`name`) VALUES ('Dégâts'), ('Tank'), ('Tireur d''élite'), ('Soutien'), ('Contrôleur'), ('Assassin'), ('Artillerie');
 
--- 3. Mettre à jour les images des classes (Optionnel mais conseillé pour avoir un projet propre)
+-- 3. Mettre à jour les images des classes
 UPDATE `classe` SET `url_img` = 'public/img/degat_icon.png' WHERE `name` = 'Dégâts';
 UPDATE `classe` SET `url_img` = 'public/img/tank_icon.png' WHERE `name` = 'Tank';
 UPDATE `classe` SET `url_img` = 'public/img/tireur_icon.png' WHERE `name` = 'Tireur d''élite';

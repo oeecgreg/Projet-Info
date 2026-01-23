@@ -10,8 +10,6 @@ use Models\UserDAO;
  */
 class RouteRegister extends Route
 {
-    // Cette route doit être publique ! (pas de protected $isProtected = true)
-    
     private MainController $controller;
 
     /**

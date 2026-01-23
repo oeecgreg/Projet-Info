@@ -90,8 +90,11 @@ class RouteAddPerso extends Route
                 exit;
             } else {
                 // message d'erreur
-                $_SESSION['flash_message'] = "Erreur : Impossible d'ajouter le Brawler.";
+
+                $_SESSION['flash_message'] = "Erreur : Impossible d'ajouter le Brawler (Nom peut-être déjà existant).";
                 $_SESSION['flash_type'] = "error"; // rouge
+                header('Location: index.php?action=add-perso');
+                exit;
             }
         } else {
             echo "Veuillez remplir tous les champs.";

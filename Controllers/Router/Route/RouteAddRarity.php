@@ -5,6 +5,7 @@ use Controllers\Router\Route;
 use Controllers\MainController;
 use Models\Rarity;
 use Models\RarityDAO;
+use Models\LogDAO;
 
 /**
  * Route pour l'ajout d'une rareté
@@ -39,7 +40,7 @@ class RouteAddRarity extends Route {
         }
         // ----------------------
         $dao = new RarityDAO();
-        $rarities = $dao->getAll(); // Assure-toi que findAll existe dans RarityDAO (hérité ou créé)
+        $rarities = $dao->getAll();
 
         // Appel du contrôleur avec les données
         return $this->controller->displayAddRarity($rarities);
@@ -50,20 +51,45 @@ class RouteAddRarity extends Route {
      * @param array $params Paramètres de la requête
      * @return void
      */
-    public function post($params = []) {
-        $name = $params['name'] ?? null;
-        $color = $params['color_code'] ?? null;
+    public function post($params = [])
+    {
+        // On utilise $_POST directement pour être sûr de tout récupérer
+        $name = $_POST['name'] ?? null;
+        $color_code = $_POST['color_code'] ?? null;
+        // var_dump($_POST); die();
 
-        if ($name && $color) {
-            $rarity = new Rarity();
+        // Vérification que les champs ne sont pas vides
+        if (!empty($name) && !empty($color_code)) {
+            
+            // Création de l'objet
+            $rarity = new Rarity(); 
             $rarity->setName($name);
-            $rarity->setColorCode($color);
+            $rarity->setColorCode($color_code);
 
             $dao = new RarityDAO();
-            $dao->add($rarity); // Il faudra ajouter la méthode add dans RarityDAO
             
-            header('Location: index.php');
-            exit;
+            if ($dao->add($rarity)) {
+                
+                // Log
+                $logDAO = new LogDAO();
+                $logDAO->addLog(
+                    'Ajout', 
+                    "Ajout rareté : " . $name . " (" . $color_code . ")", 
+                    $_SESSION['user']['username'] ?? 'Admin'
+                );
+
+                $_SESSION['flash_message'] = "Rareté ajoutée avec succès !";
+                $_SESSION['flash_type'] = "success";
+                
+                header('Location: index.php?action=add-rarity');
+                exit;
+            }
         }
+        
+        // Si on arrive ici, c'est que le if a échoué
+        $_SESSION['flash_message'] = "Erreur lors de l'ajout de la rareté. (Nom peut-être déjà existant.)";
+        $_SESSION['flash_type'] = "error";
+        header('Location: index.php?action=add-rarity');
+        exit;
     }
 }

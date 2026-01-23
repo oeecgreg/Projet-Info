@@ -217,6 +217,13 @@ h2 {
     filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.5));
 }
 
+.class_img {
+    width: 20px;
+    height: 20px; 
+    vertical-align: middle; 
+    margin-right: 5px;
+}
+
 /* ====================================
    6. BADGES DE RARETÉ
    ==================================== */
@@ -254,7 +261,7 @@ h2 {
     background-color: var(--rare-yellow); 
     color: #524c00;
 }
-.rarity-badge.ultra.légendaire { /* Si vous avez cette rareté */
+.rarity-badge.ultra.légendaire {
     background: linear-gradient(45deg, #ff00cc, #3333ff);
     color: white;
 }
@@ -271,6 +278,39 @@ h2 {
 }
 .options a:hover {
     transform: scale(1.2);
+}
+
+.btn-edit, .btn-delete {
+    text-decoration: none;
+
+}
+
+.btn-retirer {
+    color: #ff6b6b;
+    font-size: 20px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.btn-collection.add {
+    color: rgb(79, 148, 0);
+    font-size: 40px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.btn-collection.remove {
+    color: #ff6b6b;
+    font-size: 55px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.btn-collection-remove {
+    color: #ff6b6b;
+    font-size: 45px;
+    text-decoration: none;
+    text-align: center;
 }
 
 /* ====================================

@@ -28,13 +28,12 @@ class RouteCollection extends Route
      */
     public function get($params = [])
     {
-        // 1. Sécurité
-        // (Le routeur s'en occupe normalement via protectRoute, mais on garde la logique métier)
+        // Le routeur s'en occupe normalement via protectRoute, mais on garde la logique métier
         $userId = $_SESSION['user']['id'];
         $brawlerId = $params['id'] ?? null;
         $action = $params['mode'] ?? 'add'; 
         
-        // --- NOUVEAU : On récupère la destination ---
+        // --- On récupère la destination ---
         $redirect = $params['redirect'] ?? 'home'; // Par défaut : accueil
         // --------------------------------------------
 
@@ -48,7 +47,7 @@ class RouteCollection extends Route
             }
         }
 
-        // --- NOUVEAU : Redirection intelligente ---
+        // Redirection intelligente ---
         if ($redirect === 'my-collection') {
             header('Location: index.php?action=my-collection');
         } else {
